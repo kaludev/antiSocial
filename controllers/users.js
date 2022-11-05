@@ -4,6 +4,7 @@ const ValidateEmail = require('../utils/EmailValidator')
 const {uid} = require('uid')
 const {StatusCodes} = require('http-status-codes')
 const hashPassword = require('../utils/hashPassword')
+const attachCookies = require('../utils/addCookies');
 
 const mysql = require('../database/connect')
 const register = async (req,res) =>{
@@ -25,6 +26,7 @@ const register = async (req,res) =>{
     )
     await mysql.end();
     if (data.affectedRows === 0) throw new Error();
+    attachCookies(res,{id,username,email});
     res.status(StatusCodes.OK).json({
         "status":"ok",
         "user":{
