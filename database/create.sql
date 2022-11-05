@@ -9,4 +9,4 @@ CREATE TABLE user(
     email TEXT NOT NULL,
     regitreredAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
     confirmed BOOLEAN
-)
+);

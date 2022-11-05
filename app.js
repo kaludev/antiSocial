@@ -1,3 +1,5 @@
+const {readFileSync,writeFileSync} = require('fs');
+
 const express = require('express');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
@@ -9,14 +11,23 @@ const xss = require('xss-clean');
 const userRouter = require('./routers/user')
 
 const server = express();
-
-if(process.env.DEV ==true){
+const mysql = require('./database/connect')
+if(process.env.DEV == "true"){
+    const data = readFileSync('./database/reset.sql','utf8');
+    console.log(data)
+    const dataArray = data.split('\r\n');
+    dataArray.forEach(line =>{
+        if(line.length !=0){
+            mysql.query(line);
+        }
+    }) 
     
+    console.log('tabele kreirane')
 }
 server.use(express.json())
 server.use(express.static('public'))
 
-server.use(helmet())
+server.use(helmet()) 
 server.use(cors())
 server.use(xss())
 
