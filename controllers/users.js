@@ -5,6 +5,7 @@ const {uid} = require('uid')
 const {StatusCodes} = require('http-status-codes')
 const hashPassword = require('../utils/hashPassword')
 const attachCookies = require('../utils/addCookies');
+const {importUser,getUserByUsername} = require('../database/userRepository')
 
 const mysql = require('../database/connect')
 const register = async (req,res) =>{
@@ -17,15 +18,7 @@ const register = async (req,res) =>{
 
     const hashedPassword = await hashPassword(password);
     
-    const id = uid(20);
-    const data = await mysql.query("INSERT INTO user(id,username,email,password) VALUES (?,?,?,?);",
-            [id,
-            username,
-            email,
-            hashedPassword]
-    )
-    await mysql.end();
-    if (data.affectedRows === 0) throw new Error();
+    
     attachCookies(res,{id,username,email});
     res.status(StatusCodes.OK).json({
         "status":"ok",
@@ -36,4 +29,7 @@ const register = async (req,res) =>{
     })
 }
 
-module.exports = register;
+const login = async(req,res) =>{
+    const {username,password} = req.body;
+}
+module.exports = {register,login};
