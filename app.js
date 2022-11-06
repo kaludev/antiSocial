@@ -29,7 +29,7 @@ if(process.env.DEV == "true"){
     dataArray.forEach(line =>{
         if(line.length !=0){
             mysql.query(line);
-        }
+        } 
     }) 
     
     console.log('tabele kreirane')
@@ -43,8 +43,9 @@ app.use(cors())
 app.use(xss())
 setupIO(io)
 app.use(cookieParser())
-io.use(jwtAuth);
+
 app.use("/api/users",userRouter)
+io.use(jwtAuth);
 
 app.use(notFound);
 app.use(errorHandler);
