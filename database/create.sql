@@ -13,19 +13,21 @@ CREATE TABLE user(
 
 CREATE TABLE userMessages(
     id VARCHAR(20) PRIMARY KEY,
-    userSourceId VARCHAR(20) UNIQUE NOT NULL,
-    userTargetId VARCHAR(20) UNIQUE NOT NULL,
+    userSourceId VARCHAR(20) NOT NULL,
+    userTargetId VARCHAR(20) NOT NULL,
     message TEXT NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userSourceId) REFERENCES user(id)
+    FOREIGN KEY (userSourceId) REFERENCES user(id),
+    FOREIGN KEY (userTargetId) REFERENCES user(id)
 );
 
 CREATE TABLE userFriends(
     id VARCHAR(20) PRIMARY KEY,
-    userSourceId VARCHAR(20) UNIQUE NOT NULL,
-    userTargetId VARCHAR(20) UNIQUE NOT NULL,
+    userSourceId VARCHAR(20) NOT NULL,
+    userTargetId VARCHAR(20) NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userSourceId) REFERENCES user(id)
+    FOREIGN KEY (userSourceId) REFERENCES user(id),
+    FOREIGN KEY (userTargetId) REFERENCES user(id)
 );
 
 CREATE TABLE userLink(
