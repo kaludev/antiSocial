@@ -1,6 +1,7 @@
 const {readFileSync,writeFileSync} = require('fs');
 
 const express = require('express');
+require('express-async-errors')
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 

@@ -1,9 +1,8 @@
 const UnauthenticatedError = require('../errors/UnauthenticatedError')
 const mysql = require('./connect');
+const {uid} = require('uid')
 
-
-const importUser = async (username,email,hashedPassword) =>{
-    const id = uid(20);
+const importUser = async (id,username,email,hashedPassword) =>{
     const data = await mysql.query("INSERT INTO user(id,username,email,password) VALUES (?,?,?,?);",
             [id,
             username,
@@ -17,9 +16,9 @@ const importUser = async (username,email,hashedPassword) =>{
 }
 
 const getUserByUsername = async (username) =>{
-    const data = await mysql.query("SELECT * from user WHERE username=?",{
-        username
-    });
+    const data = await mysql.query('SELECT * from user WHERE username = ?',[        
+        username,
+    ]);
     await mysql.end()
     if(data.length === 0){
         return undefined;
@@ -28,9 +27,9 @@ const getUserByUsername = async (username) =>{
 }
 
 const getUserByEmail = async (email) =>{
-    const data = await mysql.query("SELECT * from user WHERE email=?",{
-        email
-    });
+    const data = await mysql.query('SELECT * from user WHERE email = ?',[        
+        email,
+    ]);
     await mysql.end()
     if(data.length === 0){
         return undefined;

@@ -20,7 +20,8 @@ const register = async (req,res) =>{
 
 
     const hashedPassword = await hashPassword(password);
-    await importUser()
+    const id = uid(20);
+    await importUser(id,username,email,hashedPassword)
     
     attachCookies(res,{id,username,email});
     res.status(StatusCodes.OK).json({
@@ -35,7 +36,7 @@ const register = async (req,res) =>{
 const login = async (req,res) =>{
     const {username,password} = req.body;
 
-    if (!email) throw new BadRequestError("Email is required");
+    if (!username) throw new BadRequestError("Email/username is required");
 	if (!password) throw new BadRequestError("Password is required");
 
     let data;
@@ -47,9 +48,9 @@ const login = async (req,res) =>{
         data = await getUserByUsername(username);
         if(!data) throw new UnauthenticatedError("User with provided username doesn't exists")
     }
-    const isPasswordCorrect = await comparePasswords(password,data.passwword);
+    const isPasswordCorrect = await comparePasswords(password,data.password);
     if(!isPasswordCorrect) throw new UnauthenticatedError('Password is incorect')
-
+ 
     attachCookies(res,{id:data.id,username:data.username,email:data.email});
     res.status(StatusCodes.OK).json({
         id:data.id,
