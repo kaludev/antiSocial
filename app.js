@@ -24,14 +24,12 @@ const mysql = require('./database/connect');
 
 if(process.env.DEV == "true"){
     const data = readFileSync('./database/reset.sql','utf8');
-    console.log(data)
     const dataArray = data.split('\r\n');
     dataArray.forEach(line =>{
         if(line.length !=0){
             mysql.query(line);
         } 
     }) 
-    
     console.log('tabele kreirane')
 }
 app.use(express.json())

@@ -12,7 +12,12 @@ const UnauthenticatedError = require('../errors/UnauthenticatedError');
 const comparePasswords = require('../utils/comparePassword');
 
 const register = async (req,res) =>{
-    const {username,email,password} = req.body;
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+    console.log(username);
+    console.log(email);
+    console.log(password)
     if(!username) throw new BadRequestError('Username cannot be empty');
     if(!email) throw new BadRequestError('Email cannot be empty');
     if(!password) throw new BadRequestError('Password cannot be empty');
