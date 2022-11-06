@@ -15,3 +15,8 @@ const importUser = async (username,email,hashedPassword) =>{
 
 }
 
+const getUserByUsername = (username) =>{
+    //const data = await mysql.query("SELECT * ")
+}
+
+module.exports = {importUser,getUserByUsername}
