@@ -1,9 +1,9 @@
 body{
     margin: 0;
     padding: 0;
-    
+    box-sizing: border-box;
 }
-.form-bg {
+.formBg {
     align-items: center;
     display: flex;
     justify-content: center;
@@ -11,12 +11,24 @@ body{
 }
 form {
     background-color: #15172b;
-    border-radius: 20px;
+    border-radius: 20px 0 0 20px;
     box-sizing: border-box;
-    height: fit-content;
+    height: auto;
+    min-height: 55%;
     width: 100%;
-    max-width: 320px;
-    padding: 25px;
+    max-width: 400px;
+    padding: 0 25px 0 25px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.formImg{
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    min-height: 55%;
+    background-color: #08d;
+    border-radius: 0 20px 20px 0;
 }
 .title {
     color: #eee;
@@ -24,7 +36,6 @@ form {
     font-size: 36px;
     font-weight: 600;
     margin-top: 30px;
-    padding: 5px;
 }
 .subtitle {
     color: #eee;
@@ -34,7 +45,7 @@ form {
     margin-top: 10px;
     padding: 5px;
 }
-.input-container {
+.inputContainer {
     margin-top: 30px;
     height: 50px;
     position: relative;
@@ -63,16 +74,13 @@ form {
     transition: transform 0.2s;
     width: 76px;
 }
-
 .cut-short {
     width: 50px;
 }
-
 .input:focus ~ .cut,
 .input:not(:placeholder-shown) ~ .cut {
     transform: translateY(8px);
 }
-
 .placeholder {
     color: #65657b;
     font-family: sans-serif;
@@ -84,22 +92,20 @@ form {
     transition: transform 200ms, color 200ms;
     top: 20px;
 }
-
 .input:focus ~ .placeholder,
 .input:not(:placeholder-shown) ~ .placeholder {
     transform: translateY(-30px) translateX(10px) scale(0.75);
 }
-
 .input:not(:placeholder-shown) ~ .placeholder {
     color: #808097;
 }
-
 .input:focus ~ .placeholder {
     color: #dc2f55;
 }
 .btn{
     display: flex;
     justify-content: center;
+    clear: both;
 }
 .submit {
     background-color: #08d;
@@ -115,7 +121,13 @@ form {
     width: 50%;
     padding: 10px;
 }
-
 .submit:active {
     background-color: #06b;
+}
+.goToLogin{
+    display: flex;
+    align-items: flex-end;
+    font-size: 14px;
+    color: #eee;
+    font-weight: 200;
 }
