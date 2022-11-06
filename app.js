@@ -8,7 +8,11 @@ const helmet = require('helmet');
 const cors = require('cors');
 const xss = require('xss-clean');
 
+
 const userRouter = require('./routers/user')
+
+const notFound= require('./middleware/NotFound')
+const errorHandler = require('./middleware/errorHandler')
 
 const server = express();
 const mysql = require('./database/connect')
@@ -33,6 +37,9 @@ server.use(xss())
 
 server.use(cookieParser())
 server.use("/api/users",userRouter)
+
+server.use(notFound);
+server.use(errorHandler);
 
 const PORT = process.env.PORT || 5000
 server.listen(PORT,() =>{

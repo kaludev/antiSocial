@@ -1,3 +1,4 @@
+const UnauthenticatedError = require('../errors/UnauthenticatedError')
 const mysql = require('./connect');
 
 
@@ -15,8 +16,26 @@ const importUser = async (username,email,hashedPassword) =>{
 
 }
 
-const getUserByUsername = (username) =>{
-    //const data = await mysql.query("SELECT * ")
+const getUserByUsername = async (username) =>{
+    const data = await mysql.query("SELECT * from user WHERE username=?",{
+        username
+    });
+    await mysql.end()
+    if(data.length === 0){
+        return undefined;
+    }
+    return data[0];
 }
 
-module.exports = {importUser,getUserByUsername}
+const getUserByEmail = async (email) =>{
+    const data = await mysql.query("SELECT * from user WHERE email=?",{
+        email
+    });
+    await mysql.end()
+    if(data.length === 0){
+        return undefined;
+    }
+    return data[0];
+}
+
+module.exports = {importUser,getUserByUsername,getUserByEmail}
