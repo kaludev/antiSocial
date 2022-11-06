@@ -6,3 +6,5 @@ class UnauthenticatedError extends customApiError{
         this.statusCode = StatusCodes.UNAUTHORIZED;
     }
 }
+
+module.exports = UnauthenticatedError;
