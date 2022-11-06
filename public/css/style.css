@@ -1,7 +1,15 @@
+:root{
+    --darkColor: #0b0b2c;
+    --mainColor: #002C3E;
+    --firstColor: #1769a7;
+    --secondColor: #78BCC4;
+    --lightColor: #F7F8F3;
+}
 body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 .formBg {
     align-items: center;
@@ -10,7 +18,7 @@ body{
     height: 100vh;
 }
 form {
-    background-color: #15172b;
+    background-color: var(--darkColor);
     border-radius: 20px 0 0 20px;
     box-sizing: border-box;
     height: auto;
@@ -27,19 +35,17 @@ form {
     max-width: 600px;
     height: auto;
     min-height: 55%;
-    background-color: #08d;
+    background-color: var(--secondColor);
     border-radius: 0 20px 20px 0;
 }
 .title {
     color: #eee;
-    font-family: sans-serif;
     font-size: 36px;
     font-weight: 600;
     margin-top: 30px;
 }
 .subtitle {
     color: #eee;
-    font-family: sans-serif;
     font-size: 16px;
     font-weight: 600;
     margin-top: 10px;
@@ -57,6 +63,7 @@ form {
     border: 0;
     box-sizing: border-box;
     color: #eee;
+    font-weight: 200;
     font-size: 18px;
     height: 100%;
     outline: 0;
@@ -64,7 +71,7 @@ form {
     width: 100%;
 }
 .cut {
-    background-color: #15172b;
+    background-color: var(--darkColor);
     border-radius: 10px;
     height: 20px;
     left: 20px;
@@ -83,7 +90,6 @@ form {
 }
 .placeholder {
     color: #65657b;
-    font-family: sans-serif;
     left: 20px;
     line-height: 14px;
     pointer-events: none;
@@ -100,7 +106,7 @@ form {
     color: #808097;
 }
 .input:focus ~ .placeholder {
-    color: #dc2f55;
+    color: var(--secondColor);
 }
 .btn{
     display: flex;
@@ -108,7 +114,7 @@ form {
     clear: both;
 }
 .submit {
-    background-color: #08d;
+    background-color: var(--firstColor);
     border-radius: 12px;
     border: 0;
     box-sizing: border-box;
@@ -120,9 +126,11 @@ form {
     text-align: center;
     width: 50%;
     padding: 10px;
+    color: var(--mainColorColor);
+    transition: all ease-in-out 0.05s;
 }
 .submit:active {
-    background-color: #06b;
+    background-color: var(--secondColor);
 }
 .goToLogin{
     display: flex;
@@ -130,4 +138,7 @@ form {
     font-size: 14px;
     color: #eee;
     font-weight: 200;
+}
+.goToLogin a{
+    color: var(--firstColor);
 }
