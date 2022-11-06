@@ -23,6 +23,7 @@
     "moment": "^2.29.4",
     "serverless-mysql": "^1.5.4",
     "socket.io": "^4.5.3",
+    "socketio-jwt-auth": "^0.2.1",
     "uid": "^2.0.1",
     "xss-clean": "^0.1.1"
   },
