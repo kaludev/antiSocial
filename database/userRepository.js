@@ -37,4 +37,14 @@ const getUserByEmail = async (email) =>{
     return data[0];
 }
 
-module.exports = {importUser,getUserByUsername,getUserByEmail}
+const getUserById = async (id) =>{
+    const data = await mysql.query('SELECT * from user WHERE id = ?',[        
+        id,
+    ]);
+    await mysql.end()
+    if(data.length === 0){
+        return undefined;
+    }
+    return data[0];
+}
+module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById}
