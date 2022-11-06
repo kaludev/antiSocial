@@ -17,15 +17,17 @@ CREATE TABLE IF NOT EXISTS userMessages(
     userTargetId VARCHAR(20) NOT NULL,
     message TEXT NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userSourceId) REFERENCES user(id)
+    FOREIGN KEY (userSourceId) REFERENCES user(id),
+    FOREIGN KEY (userTargetId) REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS userFriends(
     id VARCHAR(20) PRIMARY KEY,
-    userSourceId VARCHAR(20) UNIQUE NOT NULL,
-    userTargetId VARCHAR(20) UNIQUE NOT NULL,
+    userSourceId VARCHAR(20) NOT NULL,
+    userTargetId VARCHAR(20) NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userSourceId) REFERENCES user(id)
+    FOREIGN KEY (userSourceId) REFERENCES user(id),
+    FOREIGN KEY (userTargetId) REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS userLink(
