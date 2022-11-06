@@ -5,9 +5,12 @@ const {uid} = require('uid')
 const {StatusCodes} = require('http-status-codes')
 const hashPassword = require('../utils/hashPassword')
 const attachCookies = require('../utils/addCookies');
-const {importUser,getUserByUsername} = require('../database/userRepository')
+const {importUser,getUserByUsername,getUserByEmail} = require('../database/userRepository')
 
-const mysql = require('../database/connect')
+const mysql = require('../database/connect');
+const UnauthenticatedError = require('../errors/UnauthenticatedError');
+const comparePasswords = require('../utils/comparePassword');
+
 const register = async (req,res) =>{
     const {username,email,password} = req.body;
     if(!username) throw new BadRequestError('Username cannot be empty');
@@ -17,7 +20,7 @@ const register = async (req,res) =>{
 
 
     const hashedPassword = await hashPassword(password);
-    
+    await importUser()
     
     attachCookies(res,{id,username,email});
     res.status(StatusCodes.OK).json({
@@ -29,7 +32,29 @@ const register = async (req,res) =>{
     })
 }
 
-const login = async(req,res) =>{
+const login = async (req,res) =>{
     const {username,password} = req.body;
+
+    if (!email) throw new BadRequestError("Email is required");
+	if (!password) throw new BadRequestError("Password is required");
+
+    let data;
+    if(ValidateEmail(username)){
+       data = await getUserByEmail(username);
+       if(!data) throw new UnauthenticatedError("User with provided email doesn't exists")
+        
+    }else{
+        data = await getUserByUsername(username);
+        if(!data) throw new UnauthenticatedError("User with provided username doesn't exists")
+    }
+    const isPasswordCorrect = await comparePasswords(password,data.passwword);
+    if(!isPasswordCorrect) throw new UnauthenticatedError('Password is incorect')
+
+    attachCookies(res,{id:data.id,username:data.username,email:data.email});
+    res.status(StatusCodes.OK).json({
+        id:data.id,
+        email:data.email,
+        username: data.username
+    })
 }
 module.exports = {register,login};
