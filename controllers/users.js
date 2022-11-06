@@ -58,4 +58,8 @@ const login = async (req,res) =>{
         username: data.username
     })
 }
-module.exports = {register,login};
+
+const sendMessage = (req,res) =>{
+    
+}
+module.exports = {register,login,sendMessage};

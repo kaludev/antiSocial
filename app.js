@@ -2,7 +2,9 @@ const {readFileSync,writeFileSync} = require('fs');
 
 const express = require('express');
 require('express-async-errors')
+const http = require('http')
 require('dotenv').config();
+const socketio = require('socket.io')
 const cookieParser = require('cookie-parser');
 
 const helmet = require('helmet');
@@ -15,8 +17,11 @@ const userRouter = require('./routers/user')
 const notFound= require('./middleware/NotFound')
 const errorHandler = require('./middleware/errorHandler')
 
-const server = express();
+const app = express();
+const server = http.createServer(app);
+const io = socketio(server)
 const mysql = require('./database/connect')
+
 if(process.env.DEV == "true"){
     const data = readFileSync('./database/reset.sql','utf8');
     console.log(data)
@@ -29,20 +34,20 @@ if(process.env.DEV == "true"){
     
     console.log('tabele kreirane')
 }
-server.use(express.json())
-server.use(express.static('public'))
+app.use(express.json())
+app.use(express.static('public'))
 
-server.use(helmet()) 
-server.use(cors())
-server.use(xss())
+app.use(helmet()) 
+app.use(cors())
+app.use(xss())
 
-server.use(cookieParser())
-server.use("/api/users",userRouter)
+app.use(cookieParser())
+app.use("/api/users",userRouter)
 
-server.use(notFound);
-server.use(errorHandler);
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000
 server.listen(PORT,() =>{
-    console.log(`Server slusa na portu ${PORT}`)
+    console.log(`app slusa na portu ${PORT}`)
 })

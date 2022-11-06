@@ -13,3 +13,5 @@ const authentication = async (req,res,next) =>{
         throw new UnauthenticatedError('You aren\'t logged in')
     }
 }
+
+module.exports = authentication;
