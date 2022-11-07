@@ -15,7 +15,7 @@ register.onsubmit = async e =>{
         const options = {
             method: "POST",
             headers: {
-                "Content-Type": "aplication/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(body)
         }
@@ -23,7 +23,7 @@ register.onsubmit = async e =>{
         const res = await fetch("/api/users/register", options)
         const json = await res.json();
         if(!json.ok) throw new Error(json.message);
-        window.location.href = "/";
+        location.href = "/../index.html";
     }
     catch(error){
         alert(error.message);
@@ -40,13 +40,13 @@ login.onsubmit = async e =>{
         const res = await fetch("http://localhost:5000/api/users/login", {
             method: "POST",
             headers: {
-                "Content-Type": "aplication/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(body)
         })
         const json = await res.json();
         if(!json.ok) throw new Error(json.message);
-        window.location.href = "/";
+        location.href = "/../index.html";
     }
     catch(error){
         alert(error.message);
