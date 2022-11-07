@@ -45,11 +45,12 @@ app.use(cors())
 app.use(xss())
 app.use(cookieParser())
 const io = socketio(server)
+io.use(jwtAuth);
 setupIO(io)
 
 
 app.use("/api/users",userRouter)
-io.use(jwtAuth);
+
 
 app.use(notFound);
 app.use(errorHandler);
