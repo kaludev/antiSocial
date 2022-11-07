@@ -19,7 +19,7 @@ const setupIO  = require('./routers/socket');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server)
+
 const mysql = require('./database/connect');
 
 if(process.env.DEV == "true"){
@@ -32,15 +32,21 @@ if(process.env.DEV == "true"){
     }) 
     console.log('tabele kreirane')
 }
-app.use(express.json())
 app.use(express.static('public'))
+app.use(express.json())
+app.use((req,res,next) =>{
+    console.log(req.body);
+    next()
+})
 
 
 app.use(helmet()) 
 app.use(cors())
 app.use(xss())
-setupIO(io)
 app.use(cookieParser())
+const io = socketio(server)
+setupIO(io)
+
 
 app.use("/api/users",userRouter)
 io.use(jwtAuth);

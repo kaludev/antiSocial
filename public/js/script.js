@@ -20,7 +20,7 @@ register.onsubmit = async e =>{
             body: JSON.stringify(body)
         }
         console.log(options)
-        const res = await fetch("../api/users/register", options)
+        const res = await fetch("/api/users/register", options)
         const json = await res.json();
         if(!json.ok) throw new Error(json.message);
         window.location.href = "/";
