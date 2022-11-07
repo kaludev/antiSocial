@@ -10,6 +10,6 @@ module.exports = (io) =>{
           message: 'success logged in!',
           user: socket.request.user
         });
-      });
+    });
       
 }
