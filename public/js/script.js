@@ -23,7 +23,7 @@ register.onsubmit = async e =>{
         const res = await fetch("/api/users/register", options)
         const json = await res.json();
         if(!json.ok) throw new Error(json.message);
-        location.href = "/../index.html";
+        parent.location='index.html';
     }
     catch(error){
         alert(error.message);
@@ -46,7 +46,7 @@ login.onsubmit = async e =>{
         })
         const json = await res.json();
         if(!json.ok) throw new Error(json.message);
-        location.href = "/../index.html";
+        parent.location='index.html';
     }
     catch(error){
         alert(error.message);
