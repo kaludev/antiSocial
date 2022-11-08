@@ -8,7 +8,7 @@ module.exports = (io) =>{
           message: 'success logged in!',
           user: socket.request.user,
         });
-        socket.on("private message", (anotherSocketId, msg) => {
+        socket.on("privateMessage", (anotherSocketId, msg) => {
           socket.to(anotherSocketId).emit("private message", socket.request.user, msg);
         });
     });
