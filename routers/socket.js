@@ -1,7 +1,7 @@
 const moment = require('moment');
 const {importUser,getUserByUsername,getUserByEmail,getUserById} = require('../database/userRepository');
 const BadRequestError = require('../errors/BadRequestError');
-const {insertMessage} = require('../database/messageRepository')
+const {insertMessage, getMessagesBetween} = require('../database/messageRepository')
 module.exports = (io) =>{
     io.on('connection', async function(socket) {
         console.log('Authentication passed!');
@@ -14,12 +14,18 @@ module.exports = (io) =>{
             console.log(socket.id + " now in rooms ", socket.rooms);
           }
         })
+
+        socket.on("getMessagesBetween", async targetId =>{
+          
+        })
+
         socket.on("privateMessage", async (targetId, msg) => {
           try{
           const data = await getUserById(targetId);
           if(!data) throw new BadRequestError('userNotValid');
+          if(socket.id === targetId) throw new BadRequestError('u cannot send messages to yourself')
           socket.to(targetId).emit("privateMessage", socket.request.user, msg,moment().format('h:mm a'));
-          await insertMessage(socket.id,targetId,msg)
+          await insertMessage(socket.id,targetId,msg);
           }catch(err){
             socket.emit('error',err.message)
           }

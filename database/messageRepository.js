@@ -15,7 +15,17 @@ const insertMessage = async (source,target,msg) =>{
 
     if (data.affectedRows === 0) throw new Error();
 }
-const getMessagesBeetween = async (source,target) =>{
-    const data = await mysql.query('SELECT * from')
+const getMessagesBetween = async (source,target) =>{
+    const data = await mysql.query('SELECT * FROM userMessages WHERE (userSourceId = ? AND userTargetId = ?) OR (userTargetId = ? AND userSourceId = ?) ORDER BY createdAt ASC',
+        [
+        target,
+        source,
+        target,
+        source
+        ]
+    )
+    await mysql.end();
+    console.log(data);
 }
-module.exports = {insertMessage};
+
+module.exports = {insertMessage,getMessagesBetween};
