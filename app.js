@@ -34,11 +34,6 @@ if(process.env.DEV == "true"){
 }
 app.use(express.static('public'))
 app.use(express.json())
-app.use((req,res,next) =>{
-    console.log(req.body);
-    next()
-})
-
 
 app.use(helmet()) 
 app.use(cors())
