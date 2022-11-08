@@ -146,12 +146,24 @@ form {
     background-color: #303245;
     border-radius: 12px;
     color: #eee;
-    font-weight: 200;
-    font-size: 18px;
     height: fit-content;
     margin-left: 10px;
+    margin-top: 15px;
     width: 80%;
 }
 .message p{
-    padding: 10px;
+    margin: 0;
+}
+.message span{
+    padding-left: 8px;
+}
+.meta{
+    font-size: 12px;
+    padding: 8px 0px 0px 10px;
+    color: #808097;
+}
+.text{
+    font-weight: 200;
+    font-size: 18px;
+    padding: 5px 0px 5px 10px;
 }
