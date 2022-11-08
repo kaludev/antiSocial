@@ -1,12 +1,13 @@
 var socket = io('http://localhost:5000');
+
 const target = `3b0d22d84586e0200c9c`;
 const chatMessages = document.querySelector(`.chatMessages`)
 
 // Connection succeeded
-socket.on('success', function(data) {
+socket.on('success', async function(data) {
   console.log(data.message);
   console.log('user info: ' + data.user.id + ' username: '+ data.user.username);
-  socket.join(data.user.id)
+  socket.emit('join', data.user.id);
 })
 socket.on('error', function(err) {
   throw new Error(err);
@@ -14,9 +15,9 @@ socket.on('error', function(err) {
 
 const chatForm = document.getElementById(`chatForm`);
 
+
 //Message from server
-socket.on(`privateMessage`, target,message => {
-  console.log(message);
+socket.on(`privateMessage`, user,message => {
   outputMessage(message)
 
   //Scroll down on message
@@ -30,8 +31,8 @@ chatForm.addEventListener(`submit`, (e) => {
   const msg = e.target.elements.msg.value;
 
   //Emit message to server
-  socket.emit(`privateMessage`, msg);
-});
+  socket.emit(`privateMessage`, target,msg);
+})
 
 //Output message to DOM
 function outputMessage(message){
