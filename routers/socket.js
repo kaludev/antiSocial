@@ -6,10 +6,10 @@ module.exports = (io) =>{
         console.log('Authentication passed!');
         socket.emit('success', {
           message: 'success logged in!',
-          user: socket.request.user
+          user: socket.request.user,
         });
-        socket.on('message',msg =>{
-          msg.targetI
-        })
+        socket.on("private message", (anotherSocketId, msg) => {
+          socket.to(anotherSocketId).emit("private message", socket.id, msg);
+        });
     });
 }
