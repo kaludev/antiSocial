@@ -14,11 +14,14 @@ socket.on('error', function(err) {
 
 const chatForm = document.getElementById(`chatForm`);
 
+//Join chatroom
+//socket.emit(`joinRoom`, { username, room})
 
 //Message from server
-socket.on(`privateMessage`, (user,message) => {
-  outputMessage(message);
+socket.on(`privateMessage`, (user,message,time) => {
+  outputMessage(user,message,time);
 
+  //Scroll on new message
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
@@ -34,17 +37,13 @@ chatForm.addEventListener(`submit`, (e) => {
   //Clear input
   e.target.elements.msg.value = ``;
   e.target.elements.msg.focus();
-})
+}) 
 
 //Output message to DOM
-function outputMessage(message){
+function outputMessage(user,message,time){
   console.log(message)
   const div = document.createElement(`div`);
   div.classList.add(`message`);
-  div.innerHTML = `<p class="meta">Brad <span>9:12pm</span></p>
-  <p class="text">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-    repudiandae.
-  </p>`;
+  div.innerHTML = `<p class="meta">${message.username} <span>${time}</span></p> <p class="text"> ${message.text} </p>`;
   document.querySelector(`.chatMessages`).appendChild(div);
 }
