@@ -9,6 +9,18 @@
 </head>
 <body>
     <h1>This is index</h1>
+    <div class="formContainer">
+        <form id="chatForm">
+            <input
+              id="msg"
+              type="text"
+              placeholder="Enter Message"
+              required
+              autocomplete="off"
+            />
+            <button class="btn" type="submit">Send</button>
+          </form>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/messages.js"></script>
 </body>
