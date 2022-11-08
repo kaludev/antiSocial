@@ -7,7 +7,6 @@ const chatMessages = document.querySelector(`.chatMessages`)
 socket.on('success', async function(data) {
   console.log(data.message);
   console.log('user info: ' + data.user.id + ' username: '+ data.user.username);
-  socket.emit('join', data.user.id);
 })
 socket.on('error', function(err) {
   throw new Error(err);
@@ -17,10 +16,9 @@ const chatForm = document.getElementById(`chatForm`);
 
 
 //Message from server
-socket.on(`privateMessage`, user,message => {
-  outputMessage(message)
+socket.on(`privateMessage`, (user,message) => {
+  outputMessage(message);
 
-  //Scroll down on message
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
@@ -36,6 +34,7 @@ chatForm.addEventListener(`submit`, (e) => {
 
 //Output message to DOM
 function outputMessage(message){
+  console.log(message)
   const div = document.createElement(`div`);
   div.classList.add(`message`);
   div.innerHTML = `<p class="meta">Brad <span>9:12pm</span></p>
