@@ -10,13 +10,12 @@ module.exports = (io) =>{
         });
         socket.on('join',async room =>{
           if(room === socket.request.user.id){
-            await socket.join(room);
             console.log(socket.id + " now in rooms ", socket.rooms);
           }
         })
         socket.on("privateMessage", (anotherSocketId, msg) => {
-          const rooms = io.of("/").adapter.rooms;
-          socket.to(anotherSocketId).emit("private message", socket.request.user, msg);
+          console.log(anotherSocketId + ' '+ msg)
+          socket.to(anotherSocketId).emit("privateMessage", socket.request.user, msg);
 
         });
     });
