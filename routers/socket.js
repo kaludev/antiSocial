@@ -1,3 +1,4 @@
+const moment = require('moment');
 
 
 
@@ -15,8 +16,8 @@ module.exports = (io) =>{
         })
         socket.on("privateMessage", (anotherSocketId, msg) => {
           console.log(anotherSocketId + ' '+ msg)
-          socket.to(anotherSocketId).emit("privateMessage", socket.request.user, msg);
-
+          //TODO: check if target is friend
+          socket.to(anotherSocketId).emit("privateMessage", (socket.request.user, msg,moment.format('h:mm a')));
         });
     });
 }

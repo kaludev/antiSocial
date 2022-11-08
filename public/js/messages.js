@@ -29,7 +29,7 @@ chatForm.addEventListener(`submit`, (e) => {
   const msg = e.target.elements.msg.value;
 
   //Emit message to server
-  socket.emit(`privateMessage`, target,msg);
+  socket.emit(`privateMessage`, (target,msg));
 
   //Clear input
   e.target.elements.msg.value = ``;
