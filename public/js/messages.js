@@ -1,5 +1,7 @@
 var socket = io('http://localhost:5000');
 const target = `3b0d22d84586e0200c9c`;
+const chatMessages = document.querySelector(`.chatMessages`)
+
 // Connection succeeded
 socket.on('success', function(data) {
   console.log(data.message);
@@ -16,7 +18,10 @@ const chatForm = document.getElementById(`chatForm`);
 socket.on(`privateMessage`, target,message => {
   console.log(message);
   outputMessage(message)
-})
+
+  //Scroll down on message
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+});
 
 //Message submit
 chatForm.addEventListener(`submit`, (e) => {
@@ -26,4 +31,16 @@ chatForm.addEventListener(`submit`, (e) => {
 
   //Emit message to server
   socket.emit(`privateMessage`, msg);
-})
+});
+
+//Output message to DOM
+function outputMessage(message){
+  const div = document.createElement(`div`);
+  div.classList.add(`message`);
+  div.innerHTML = `<p class="meta">Brad <span>9:12pm</span></p>
+  <p class="text">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
+    repudiandae.
+  </p>`;
+  document.querySelector(`.chatMessages`).appendChild(div);
+}
