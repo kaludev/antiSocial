@@ -9,7 +9,7 @@ module.exports = (io) =>{
           user: socket.request.user,
         });
         socket.on("private message", (anotherSocketId, msg) => {
-          socket.to(anotherSocketId).emit("private message", socket.id, msg);
+          socket.to(anotherSocketId).emit("private message", socket.request.user, msg);
         });
     });
 }
