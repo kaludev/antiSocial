@@ -1,7 +1,6 @@
 const moment = require('moment');
-
-
-
+const {importUser,getUserByUsername,getUserByEmail,getUserById} = require('../database/userRepository');
+const BadRequestError = require('../errors/BadRequestError');
 module.exports = (io) =>{
     io.on('connection', async function(socket) {
         console.log('Authentication passed!');
@@ -14,10 +13,14 @@ module.exports = (io) =>{
             console.log(socket.id + " now in rooms ", socket.rooms);
           }
         })
-        socket.on("privateMessage", (anotherSocketId, msg) => {
-          console.log(anotherSocketId + ' '+ msg)
-          //TODO: check if target is friend
-          socket.to(anotherSocketId).emit("privateMessage", (socket.request.user, msg,moment.format('h:mm a')));
+        socket.on("privateMessage", async (anotherSocketId, msg) => {
+          try{
+          const data = await getUserById(anotherSocketId);
+          if(!data) throw new BadRequestError('userNotValid');
+          socket.to(anotherSocketId).emit("privateMessage", socket.request.user, msg,moment().format('h:mm a'));
+          }catch(err){
+            socket.emit('error',err.message)
+          }
         });
     });
 }

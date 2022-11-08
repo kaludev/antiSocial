@@ -32,7 +32,7 @@ chatForm.addEventListener(`submit`, (e) => {
   const msg = e.target.elements.msg.value;
 
   //Emit message to server
-  socket.emit(`privateMessage`, (target,msg));
+  socket.emit(`privateMessage`, target,msg);
 
   //Clear input
   e.target.elements.msg.value = ``;
@@ -41,7 +41,9 @@ chatForm.addEventListener(`submit`, (e) => {
 
 //Output message to DOM
 function outputMessage(user,message,time){
-  console.log(message)
+  console.log(user);
+  console.log(message);
+  console.log(time)
   const div = document.createElement(`div`);
   div.classList.add(`message`);
   div.innerHTML = `<p class="meta">${message.username} <span>${time}</span></p> <p class="text"> ${message.text} </p>`;
