@@ -142,6 +142,10 @@ form {
 .goToLogin a{
     color: var(--firstColor);
 }
+.chatMessages{
+    overflow-y: scroll;
+    max-height: 480px;
+}
 .message{
     background-color: #303245;
     border-radius: 12px;
