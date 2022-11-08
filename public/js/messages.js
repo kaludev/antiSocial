@@ -9,6 +9,5 @@
   socket.on('success', function(data) {
     console.log(data.message);
     console.log('user info: ' + data.user.id + ' username: '+ data.user.username);
-    socket.join(data.user.id)
   })
  
