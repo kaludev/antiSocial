@@ -21,6 +21,7 @@ module.exports = async (socket,next) =>{
   try{
       data = jwt.verify(token,process.env.JWT_SECRET)
       socket.request.user = {id: data.userId,username: data.userName};
+      socket.id = data.userId;
       next()
   }catch{
     console.log('error')
