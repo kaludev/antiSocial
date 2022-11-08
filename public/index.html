@@ -8,18 +8,21 @@
     <title>Welcome</title>
 </head>
 <body>
-    <h1>This is index</h1>
-    <div class="formContainer">
+    <div class="formBg">
         <form id="chatForm">
-            <input
-              id="msg"
-              type="text"
-              placeholder="Enter Message"
-              required
-              autocomplete="off"
-            />
-            <button class="btn" type="submit">Send</button>
-          </form>
+            <div class="title">This is index</div>
+            <div class="inputContainer">
+                <input class="input" id="msg" type="text" placeholder="Enter Message" required autocomplete="off"/>
+            </div>
+            <div class="btn">
+                <button type="submit" class="submit">Send</button>
+            </div>
+        </form>
+        <div class="formImg">
+            <div class="chatMessages">
+                <div class="message"></div>
+            </div>
+        </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/messages.js"></script>
