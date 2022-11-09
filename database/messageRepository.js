@@ -15,14 +15,15 @@ const insertMessage = async (source,target,msg) =>{
 
     if (data.affectedRows === 0) throw new Error();
 }
-const getMessagesBetween = async (source,target) =>{
+const getMessagesBetween = async (source,target,last) =>{
     try{
-        const data = await mysql.query('SELECT * FROM userMessages WHERE (userSourceId = ? AND userTargetId = ?) OR (userTargetId = ? AND userSourceId = ?) ORDER BY createdAt ASC',
+        const data = await mysql.query('SELECT * FROM userMessages WHERE (userSourceId = ? AND userTargetId = ?) OR (userTargetId = ? AND userSourceId = ?) TOP ? ORDER BY createdAt ASC',
             [
             target,
             source,
             target,
-            source
+            source,
+            last
             ]
         )
         await mysql.end();
