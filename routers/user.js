@@ -9,5 +9,4 @@ router.route('/addfriend/:username').get(auth,addFriend);
 router.route('/acceptfriend/:username').get(auth,acceptFriend);
 router.route('/deletefriend/:username').get(auth,deleteFriend);
 router.route('/getFriends').get(auth,getFriends);
-
 module.exports = router

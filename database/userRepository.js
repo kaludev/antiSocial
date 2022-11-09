@@ -1,6 +1,7 @@
-const UnauthenticatedError = require('../errors/UnauthenticatedError')
+
 const mysql = require('./connect');
-const {uid} = require('uid')
+const {uid} = require('uid');
+const BadRequestError = require('../errors/BadRequestError');
 
 const importUser = async (id,username,email,hashedPassword) =>{
     const data = await mysql.query("INSERT INTO user(id,username,email,password) VALUES (?,?,?,?);",
@@ -49,8 +50,9 @@ const getUserById = async (id) =>{
 }
 
 const importUserFriend = async (source,target,accepted) =>{
+    
     const id = await uid(20);
-    const exists = await mysql.query(`SELECT * FROM userFriend WHERE (userSourceId = ? AND userTargetId = ?) OR (userSourceId = ? AND userTargetId = ?)`,[
+    const exists = await mysql.query(`SELECT * FROM userFriends WHERE (userSourceId = ? AND userTargetId = ?) OR (userSourceId = ? AND userTargetId = ?)`,[
         source,
         target,
         target,
@@ -67,6 +69,7 @@ const importUserFriend = async (source,target,accepted) =>{
     ]);
     await mysql.end()
     if (data.affectedRows === 0) throw new Error('data not inserted');
+      
 }
 
 const acceptUserFriend = async (source, target) => {

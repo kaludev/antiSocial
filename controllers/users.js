@@ -6,6 +6,7 @@ const {StatusCodes} = require('http-status-codes')
 const hashPassword = require('../utils/hashPassword')
 const attachCookies = require('../utils/addCookies');
 const {importUser,getUserByUsername,getUserByEmail,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends} = require('../database/userRepository')
+const errorWrapper = require('../middleware/ErrorWrapper')
 
 const mysql = require('../database/connect');
 const UnauthenticatedError = require('../errors/UnauthenticatedError');
@@ -27,7 +28,7 @@ const register = async (req,res) =>{
 
     const hashedPassword = await hashPassword(password);
     const id = uid(20);
-    await importUser(id,username,email,hashedPassword)
+    await errorWrapper(importUser,req,res)([id,username,email,hashedPassword])
     
     attachCookies(res,{id,username,email});
     res.status(StatusCodes.OK).json({
@@ -47,11 +48,11 @@ const login = async (req,res) =>{
 
     let data;
     if(ValidateEmail(username)){
-       data = await getUserByEmail(username);
+       data = await errorWrapper(getUserByEmail,req,res)([username]);
        if(!data) throw new UnauthenticatedError("User with provided email doesn't exists")
         
     }else{
-        data = await getUserByUsername(username);
+        data = await errorWrapper(getUserByUsername,req,res)([username]);
         if(!data) throw new UnauthenticatedError("User with provided username doesn't exists")
     }
     const isPasswordCorrect = await comparePasswords(password,data.password);
@@ -70,10 +71,10 @@ const addFriend = async (req,res) =>{
     username = req.params.username;
     console.log(username)
     console.log(req.user.userId)
-    const data = await getUserByUsername(username);
+    const data = await errorWrapper(getUserByUsername,req,res)([username]);
     if(!data) throw new BadRequestError(`User not found: ${username}`);
     if(!username) throw new BadRequestError('Username is required');
-    importUserFriend(req.user.userId,data.id,'false');
+    errorWrapper(importUserFriend,req,res)([req.user.userId,data.id,'false']);
     res.status(StatusCodes.OK).json({
         ok:true,
         username: username
@@ -83,7 +84,7 @@ const addFriend = async (req,res) =>{
 const acceptFriend = async (req, res) =>{
     username = req.params.username;
     if(!username) throw new BadRequestError('Username is required');
-    const data = await getUserByUsername(username);
+    const data = await errorWrapper(getUserByUsername,req,res)([username]);
     if(!data) throw new BadRequestError(`User not found: ${username}`);
     await acceptUserFriend(req.user.userId,data.id);
     res.status(StatusCodes.OK).json({
@@ -96,7 +97,7 @@ const acceptFriend = async (req, res) =>{
 const deleteFriend = async (req, res) => {
     username = req.params.username;
     if(!username) throw new BadRequestError('Username is required');
-    const data = await getUserByUsername(username);
+    const data = await errorWrapper(getUserByUsername,req,res)([username]);
     if(!data) throw new Error(`User not found: ${username}`);
     await deleteUserFriend(req.user.userId,data.id);
     res.status(StatusCodes.OK).json({
@@ -106,7 +107,7 @@ const deleteFriend = async (req, res) => {
 }
 
 const getFriends = async (req,res) =>{
-    const data = await getUserFriends(req.user.userId);
+    const data = await errorWrapper(getUserFriends,req,res)([req.user.userId]);
     res.status(StatusCodes.OK).json({
         ok:true,
         data: data
