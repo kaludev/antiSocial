@@ -47,4 +47,19 @@ const getUserById = async (id) =>{
     }
     return data[0];
 }
-module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById}
+
+const importUserFriend = async (source,target,accepted) =>{
+    const id = await uid(20);
+    const res = await mysql.query('INSERT INTO userFriends VALUES (?, ?,?,?)',
+    [
+        id,
+        source,
+        target,
+        accepted
+    ]);
+    await mysql.end()
+    if(data.length === 0){
+        return undefined;
+    }
+}
+module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend}

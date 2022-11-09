@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS userFriends(
     id VARCHAR(20) PRIMARY KEY,
     userSourceId VARCHAR(20) NOT NULL,
     userTargetId VARCHAR(20) NOT NULL,
+    accepted BOOLEAN NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userSourceId) REFERENCES user(id),
     FOREIGN KEY (userTargetId) REFERENCES user(id)

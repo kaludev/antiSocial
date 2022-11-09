@@ -14,9 +14,9 @@ module.exports = (io) =>{
             console.log(socket.id + " now in rooms ", socket.rooms);
           }
         })
-
         socket.on("getMessagesBetween", async (targetId,last) =>{
               if(!targetId) throw new BadRequestError('targetID is required');
+              //TODO:check if target is friend
               last = last || 20;
               const data = getMessagesBetween(socket.id,targetID,last);
               socket.emit('data', data);

@@ -5,7 +5,7 @@ const {uid} = require('uid')
 const {StatusCodes} = require('http-status-codes')
 const hashPassword = require('../utils/hashPassword')
 const attachCookies = require('../utils/addCookies');
-const {importUser,getUserByUsername,getUserByEmail} = require('../database/userRepository')
+const {importUser,getUserByUsername,getUserByEmail,importUserFriend} = require('../database/userRepository')
 
 const mysql = require('../database/connect');
 const UnauthenticatedError = require('../errors/UnauthenticatedError');
@@ -66,7 +66,10 @@ const login = async (req,res) =>{
     })
 }
 
-const sendMessage = (req,res) =>{
-    
+const addFriend = (req,res) =>{
+    username = req.params;
+    if(!username) throw new BadRequestError('Username is required');
+    importUserFriend(req.user.userId,username,'false');
 }
-module.exports = {register,login,sendMessage};
+
+module.exports = {register,login,addFriend};
