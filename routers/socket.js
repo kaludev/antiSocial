@@ -23,6 +23,7 @@ module.exports = (io) =>{
         })
         socket.on("privateMessage", async (targetId, msg) => {
           try{
+            //TODO:check if target is friend
           const data = await getUserById(targetId);
           if(!data) throw new BadRequestError('userNotValid');
           if(socket.id === targetId) throw new BadRequestError('u cannot send messages to yourself')
