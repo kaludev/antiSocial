@@ -14,21 +14,27 @@ module.exports = (io) =>{
             console.log(socket.id + " now in rooms ", socket.rooms);
           }
         })
-        socket.on("getMessagesBetween", async (targetId,last) =>{
-              if(!targetId) throw new BadRequestError('targetID is required');
+        socket.on("getMessagesBetween", async (targetUsername,last) =>{
+            try{
+              if(!targetUsername) throw new BadRequestError('targetUsername is required');
+              const data = await getUserByUsername(targetUsername);
+              if(!data) throw new BadRequestError('userNotValid');
               //TODO:check if target is friend
               last = last || 20;
-              const data = getMessagesBetween(socket.id,targetID,last);
-              socket.emit('data', data);
+              const messages = getMessagesBetween(socket.id,data.id,last);
+              socket.emit('data', messages);
+            }catch(err){
+              socket.emit('error',err.message)
+            }
         })
-        socket.on("privateMessage", async (targetId, msg) => {
+        socket.on("privateMessage", async (targetUsername, msg) => {
           try{
             //TODO:check if target is friend
-          const data = await getUserById(targetId);
+          const data = await getUserByUsername(targetUsername);
           if(!data) throw new BadRequestError('userNotValid');
-          if(socket.id === targetId) throw new BadRequestError('u cannot send messages to yourself')
-          socket.to(targetId).emit("privateMessage", socket.request.user, msg,moment().format('h:mm a'));
-          await insertMessage(socket.id,targetId,msg);
+          if(socket.id ===  data.id) throw new BadRequestError('u cannot send messages to yourself')
+          socket.to(data.id).emit("privateMessage", socket.request.user, msg,moment().format('h:mm a'));
+          await insertMessage(socket.id,data.id,msg);
           }catch(err){
             socket.emit('error',err.message)
           }

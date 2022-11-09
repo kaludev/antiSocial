@@ -13,7 +13,7 @@ const insertMessage = async (source,target,msg) =>{
    )
    await mysql.end();
 
-    if (data.affectedRows === 0) throw new Error();
+    if (data.affectedRows === 0) throw new Error('query error');
 }
 const getMessagesBetween = async (source,target,last) =>{
     try{

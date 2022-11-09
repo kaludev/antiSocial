@@ -5,7 +5,7 @@ const {uid} = require('uid')
 const {StatusCodes} = require('http-status-codes')
 const hashPassword = require('../utils/hashPassword')
 const attachCookies = require('../utils/addCookies');
-const {importUser,getUserByUsername,getUserByEmail,importUserFriend,acceptUserFriend} = require('../database/userRepository')
+const {importUser,getUserByUsername,getUserByEmail,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends} = require('../database/userRepository')
 
 const mysql = require('../database/connect');
 const UnauthenticatedError = require('../errors/UnauthenticatedError');
@@ -71,9 +71,9 @@ const addFriend = async (req,res) =>{
     console.log(username)
     console.log(req.user.userId)
     const data = await getUserByUsername(username);
-    if(!data) throw new Error(`User not found: ${username}`);
+    if(!data) throw new BadRequestError(`User not found: ${username}`);
     if(!username) throw new BadRequestError('Username is required');
-    importUserFriend(req.user.userId,username,'false');
+    importUserFriend(req.user.userId,data.id,'false');
     res.status(StatusCodes.OK).json({
         ok:true,
         username: username
@@ -84,7 +84,7 @@ const acceptFriend = async (req, res) =>{
     username = req.params.username;
     if(!username) throw new BadRequestError('Username is required');
     const data = await getUserByUsername(username);
-    if(!data) throw new Error(`User not found: ${username}`);
+    if(!data) throw new BadRequestError(`User not found: ${username}`);
     await acceptUserFriend(req.user.userId,data.id);
     res.status(StatusCodes.OK).json({
         ok:true,
@@ -92,4 +92,25 @@ const acceptFriend = async (req, res) =>{
     })
 }
 
-module.exports = {register,login,addFriend,acceptFriend};
+
+const deleteFriend = async (req, res) => {
+    username = req.params.username;
+    if(!username) throw new BadRequestError('Username is required');
+    const data = await getUserByUsername(username);
+    if(!data) throw new Error(`User not found: ${username}`);
+    await deleteUserFriend(req.user.userId,data.id);
+    res.status(StatusCodes.OK).json({
+        ok:true,
+        username: username
+    })
+}
+
+const getFriends = async (req,res) =>{
+    const data = await getUserFriends(req.user.userId);
+    res.status(StatusCodes.OK).json({
+        ok:true,
+        data: data
+    })
+}
+
+module.exports = {register,login,addFriend,acceptFriend,deleteFriend,getFriends};

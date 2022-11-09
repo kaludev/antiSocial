@@ -50,7 +50,15 @@ const getUserById = async (id) =>{
 
 const importUserFriend = async (source,target,accepted) =>{
     const id = await uid(20);
-    const data = await mysql.query('INSERT INTO userFriends(id,userSourceId,userTargetId,accepted) VALUES (?, ?,?,?)',
+    const exists = await mysql.query(`SELECT * FROM userFriend WHERE (userSourceId = ? AND userTargetId = ?) OR (userSourceId = ? AND userTargetId = ?)`,[
+        source,
+        target,
+        target,
+        source
+
+    ]);
+    if(exists.length) throw new BadRequestError('you are already friends with this user');
+    const data = await mysql.query('INSERT INTO userFriends(id,userSourceId,userTargetId,accepted) VALUES (?, ?,?,?) ',
     [
         id,
         source,
@@ -69,5 +77,30 @@ const acceptUserFriend = async (source, target) => {
     ]);
     await mysql.end()
     if (data.affectedRows === 0) throw new Error('data not updated');
-}   
-module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend}
+}
+
+const deleteUserFriend = async (source, target) => {
+    const data = await mysql.query('DELETE FROM userfriends WHERE (userSourceID = ? AND userTargetID = ?) OR (userTargetID = ? AND userSourceID = ?)',
+    [
+        source,
+        target,
+        source,
+        target
+    ]);
+    await mysql.end()
+    if (data.affectedRows === 0) throw new Error('data not deleted');
+
+}
+
+const getUserFriends = async (source) => {
+    const data = await mysql.query('SELECT id,username from userFriends WHERE (userSourceID = ? OR userTargetID = ?) AND accepted = 1', 
+        [
+            source,
+            source
+    ]);
+    await mysql.end()
+    return data;
+}
+
+
+module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends}
