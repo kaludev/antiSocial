@@ -15,10 +15,13 @@ module.exports = (io) =>{
           }
         })
 
-        socket.on("getMessagesBetween", async targetId =>{
-          
+        socket.on("getMessagesBetween", async (targetId,last) =>{
+              if(!targetId) throw new BadRequestError('targetID is required');
+              last = last || 20;
+              const data = getMessagesBetween(socket.id,targetID);
+              data.splice(-last);
+              socket.emit('data', data);
         })
-
         socket.on("privateMessage", async (targetId, msg) => {
           try{
           const data = await getUserById(targetId);
