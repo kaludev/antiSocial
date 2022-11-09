@@ -71,10 +71,12 @@ const addFriend = async (req,res) =>{
     username = req.params.username;
     console.log(username)
     console.log(req.user.userId)
-    const data = await errorWrapper(getUserByUsername,req,res)([username]);
+
+    const data = await await errorWrapper(getUserByUsername,req,res)([username]);
     if(!data) throw new BadRequestError(`User not found: ${username}`);
     if(!username) throw new BadRequestError('Username is required');
-    errorWrapper(importUserFriend,req,res)([req.user.userId,data.id,'false']);
+    if(data.id == req.user.userId) throw new BadRequestError('you cannot be friends with yourself')
+    await await errorWrapper(importUserFriend,req,res)([req.user.userId,data.id,'false']);
     res.status(StatusCodes.OK).json({
         ok:true,
         username: username
@@ -84,9 +86,9 @@ const addFriend = async (req,res) =>{
 const acceptFriend = async (req, res) =>{
     username = req.params.username;
     if(!username) throw new BadRequestError('Username is required');
-    const data = await errorWrapper(getUserByUsername,req,res)([username]);
+    const data = await await errorWrapper(getUserByUsername,req,res)([username]);
     if(!data) throw new BadRequestError(`User not found: ${username}`);
-    await acceptUserFriend(req.user.userId,data.id);
+    await await errorWrapper(acceptUserFriend,req,res)([req.user.userId,data.id]);
     res.status(StatusCodes.OK).json({
         ok:true,
         username: username
@@ -107,11 +109,24 @@ const deleteFriend = async (req, res) => {
 }
 
 const getFriends = async (req,res) =>{
-    const data = await errorWrapper(getUserFriends,req,res)([req.user.userId]);
+    const data = await (await errorWrapper(getUserFriends,req,res))([req.user.userId]);
     res.status(StatusCodes.OK).json({
         ok:true,
         data: data
     })
 }
 
-module.exports = {register,login,addFriend,acceptFriend,deleteFriend,getFriends};
+const search = async (req,res) =>{
+    const input = req.params.input;
+    const data = await mysql.query(`SELECT TOP 5 username from user WHERE username LIKE "*?*" OR LIKE "?*" OR LIKE "*?" ORDER BY ASC`,[        
+        username,
+        username,
+        username,
+    ]);
+    await mysql.end()
+    res.status(StatusCodes.OK).json({
+        ok:true,
+        data: data
+    })
+}
+module.exports = {register,login,addFriend,acceptFriend,deleteFriend,getFriends,search};

@@ -53,12 +53,5 @@ document.getElementById(`search`).addEventListener(`onkeyup`, searchUser);
 
 const search = async (username) =>{
   let filter = document.getElementsByTagName(`search`).value;
-  const data = await mysql.query(`SELECT TOP 5 username from user WHERE username LIKE "*${filter}*" ORDER BY ASC`,[        
-      username,
-  ]);
-  await mysql.end()
-  if(data.length === 0){
-      return alert(`No users found`);
-  }
-  return data;
+  
 }

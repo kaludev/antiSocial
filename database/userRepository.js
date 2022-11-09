@@ -17,6 +17,7 @@ const importUser = async (id,username,email,hashedPassword) =>{
 }
 
 const getUserByUsername = async (username) =>{
+
     const data = await mysql.query('SELECT * from user WHERE username = ?',[        
         username,
     ]);
@@ -38,7 +39,7 @@ const getUserByEmail = async (email) =>{
     return data[0];
 }
 
-const getUserById = async (id) =>{
+const getUserById = async (id)=>{
     const data = await mysql.query('SELECT * from user WHERE id = ?',[        
         id,
     ]);
@@ -96,7 +97,7 @@ const deleteUserFriend = async (source, target) => {
 }
 
 const getUserFriends = async (source) => {
-    const data = await mysql.query('SELECT id,username from userFriends WHERE (userSourceID = ? OR userTargetID = ?) AND accepted = 1', 
+    const data = await mysql.query('SELECT * from userFriends WHERE (userSourceID = ? OR userTargetID = ?) AND accepted = 1', 
         [
             source,
             source
