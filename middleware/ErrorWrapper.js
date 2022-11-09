@@ -8,6 +8,7 @@ module.exports = function errorWrapper(cb,req,res) {
             else if(params.length === 3 ) return await cb(params[0],params[1],params[2]);
             if(params.length === 4 ) return await cb(params[0],params[1],params[2],params[3])
         } catch (error) {
+            console.error(error);
             await errorHandler(error, req, res);
         }
     }

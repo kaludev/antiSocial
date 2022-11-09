@@ -49,9 +49,16 @@ function outputMessage(user,message,time){
   div.innerHTML = `<p class="meta">${user.username} <span>${time}</span></p> <p class="text"> ${message} </p>`;
   document.querySelector(`.chatMessages`).appendChild(div);
 }
-document.getElementById(`search`).addEventListener(`onkeyup`, searchUser);
 
-const search = async (username) =>{
+const searchUser = async (event) =>{
   let filter = document.getElementsByTagName(`search`).value;
-  
+  console.log(filter);
+  const res = await fetch(`/api/users/search/${filter}`)
+  console.log(res);
+  const data = await res.json();
+  console.log(data);
+  const friends = await data.data;
+  console.log(friends);
 }
+document.getElementById(`search`).addEventListener(`keypress`, searchUser);
+

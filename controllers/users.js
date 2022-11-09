@@ -118,11 +118,8 @@ const getFriends = async (req,res) =>{
 
 const search = async (req,res) =>{
     const input = req.params.input;
-    const data = await mysql.query(`SELECT TOP 5 username from user WHERE username LIKE "*?*" OR LIKE "?*" OR LIKE "*?" ORDER BY ASC`,[        
-        username,
-        username,
-        username,
-    ]);
+    console.log(input)
+    const data = await mysql.query(`SELECT username from user WHERE username LIKE '*${input}*' OR LIKE '*${input}' OR LIKE '${input}*'; `);
     await mysql.end()
     res.status(StatusCodes.OK).json({
         ok:true,

@@ -21,6 +21,7 @@ const app = express();
 const server = http.createServer(app);
 
 const mysql = require('./database/connect');
+const socketErrorWrapper = require('./middleware/socketErrorWrapper');
 
 if(process.env.DEV == "true"){
     const data = readFileSync('./database/reset.sql','utf8');
@@ -40,7 +41,7 @@ app.use(cors())
 app.use(xss())
 app.use(cookieParser())
 const io = socketio(server)
-io.use(jwtAuth);
+io.use(socketErrorWrapper(jwtAuth));
 setupIO(io)
 
 
