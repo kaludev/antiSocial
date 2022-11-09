@@ -12,6 +12,9 @@
         <form id="chatForm">
             <div class="title">This is index</div>
             <div class="inputContainer">
+                <input type="text" class="input" id="search" onkeyup="search()" placeholder="Search for names..">
+            </div>
+            <div class="inputContainer">
                 <input class="input" id="msg" type="text" placeholder="Enter Message" required autocomplete="off"/>
             </div>
             <div class="btn">
@@ -24,16 +27,7 @@
             </div>
         </div>
     </div>
-    <!--
-         <div class="searched">
-                <form onsubmit="return false" class="formSearch">
-                    <input type="type" placeholder="Search Friend">
-                    <button data-ripple type="button" onclick="onSearch(this);">
-                        <p class="ti-search">Search</p>
-                    <button>
-                </form>
-            </div>
-    -->
+    
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/messages.js"></script>
 </body>
