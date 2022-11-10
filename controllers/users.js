@@ -119,12 +119,9 @@ const getFriends = async (req,res) =>{
 const search = async (req,res) =>{
     const input = req.params.input;
     const id = req.user.userId;
-    console.log(id)
-    const data = await mysql.query(`SELECT username from user WHERE (username LIKE ? OR username LIKE ? OR username LIKE ?) AND NOT id = ?; `,
+    const data = await mysql.query(`SELECT username from user WHERE username LIKE ? AND NOT id = ?; `,
     [
-        '%'+input,
         '%'+input+'%',
-        input+'%',
         id
     ]);
     await mysql.end()
