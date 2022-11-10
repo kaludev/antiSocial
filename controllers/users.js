@@ -119,15 +119,22 @@ const getFriends = async (req,res) =>{
 const search = async (req,res) =>{
     const input = req.params.input;
     const id = req.user.userId;
-    const data = await mysql.query(`SELECT username from user WHERE username LIKE ? AND NOT id = ?; `,
+    const data = await mysql.query(`SELECT username,UPPER(username) as cs from user WHERE (UPPER(username) LIKE UPPER(?) AND NOT id = ?) ; `,
     [
         '%'+input+'%',
         id
     ]);
+    let score = []
+    data.forEach(user =>{
+        let scoreNum = -user.cs.length - 2*(user.cs.indexOf(input.toUpperCase()));
+        score.push({user,scoreNum});
+    })
+    score.sort((a,b) => {return b.scoreNum - a.scoreNum})
+    let result = score.map(a => a.user.username);
     await mysql.end()
     res.status(StatusCodes.OK).json({
         ok:true,
-        data: data
+        data: result,
     })
 }
 module.exports = {register,login,addFriend,acceptFriend,deleteFriend,getFriends,search};
