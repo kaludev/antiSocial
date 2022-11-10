@@ -1,6 +1,6 @@
 var socket = io('http://localhost:5000');
 
-const target = `3b0d22d84586e0200c9c`;
+const target = `luka.markovic1`;
 const chatMessages = document.querySelector(`.chatMessages`)
 
 // Connection succeeded
@@ -51,14 +51,16 @@ function outputMessage(user,message,time){
 }
 
 const searchUser = async (event) =>{
-  let filter = document.getElementsByTagName(`search`).value;
-  console.log(filter);
-  const res = await fetch(`/api/users/search/${filter}`)
-  console.log(res);
-  const data = await res.json();
-  console.log(data);
-  const friends = await data.data;
-  console.log(friends);
+  let filter = event.target.value;
+  if(filter) {
+    console.log(filter);
+    const res = await fetch(`/api/users/search/${filter}`)
+    console.log(res);
+    const data = await res.json();
+    console.log(data);
+    const friends = await data.data;
+    console.log(friends);
+  }
 }
-document.getElementById(`search`).addEventListener(`keypress`, searchUser);
+document.getElementById(`search`).addEventListener(`keyup`, searchUser);
 
