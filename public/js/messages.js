@@ -1,3 +1,5 @@
+
+
 var socket = io('http://localhost:5000');
 
 const target = `luka.markovic1`;
@@ -63,4 +65,15 @@ const searchUser = async (event) =>{
   }
 }
 document.getElementById(`search`).addEventListener(`keyup`, searchUser);
+
+document.querySelector(`#sendFile`).addEventListener(`click`,async (e) =>{
+  e.preventDefault();
+  const file = document.querySelector('#inputFile').files[0];
+  let formData = new FormData();
+  formData.append('photo', file);
+  const res = await fetch(`/api/users/upload`,{
+    method: 'POST',
+    body: formData
+  })
+})
 

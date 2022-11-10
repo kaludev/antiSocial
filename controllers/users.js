@@ -5,7 +5,7 @@ const {uid} = require('uid')
 const {StatusCodes} = require('http-status-codes')
 const hashPassword = require('../utils/hashPassword')
 const attachCookies = require('../utils/addCookies');
-const {importUser,getUserByUsername,getUserByEmail,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends} = require('../database/userRepository')
+const {importUser,getUserByUsername,getUserByEmail,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends, getUserById} = require('../database/userRepository')
 const errorWrapper = require('../middleware/ErrorWrapper')
 
 const mysql = require('../database/connect');
@@ -67,6 +67,25 @@ const login = async (req,res) =>{
     })
 }
 
+const showMe = async (req,res) =>{
+    const id = req.user.userId;
+    const data = await await errorWrapper(getUserById,req,res)([id]);
+    if(!data) throw new UnauthenticatedError("User with provided id doesn't exists")
+
+    res.status(StatusCodes.OK).json({
+        ok:true,
+        id:id,
+        email:data.email,
+        username:data.username
+    });
+}
+
+const upload = async (req, res) => {
+    console.log(req.body) // form files
+    console.log(req.file.filename) // form files
+    res.send(req.body.photo);
+
+}
 const addFriend = async (req,res) =>{
     username = req.params.username;
     console.log(username)
@@ -126,7 +145,7 @@ const search = async (req,res) =>{
     ]);
     let score = []
     data.forEach(user =>{
-        let scoreNum = -user.cs.length - 2*(user.cs.indexOf(input.toUpperCase()));
+        let scoreNum = -user.cs.length/2 - 2*(user.cs.indexOf(input.toUpperCase()));
         score.push({user,scoreNum});
     })
     score.sort((a,b) => {return b.scoreNum - a.scoreNum})
@@ -137,4 +156,4 @@ const search = async (req,res) =>{
         data: result,
     })
 }
-module.exports = {register,login,addFriend,acceptFriend,deleteFriend,getFriends,search};
+module.exports = {register,login,showMe,upload,addFriend,acceptFriend,deleteFriend,getFriends,search};
