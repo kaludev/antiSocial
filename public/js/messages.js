@@ -51,7 +51,11 @@ function outputMessage(user,message,time){
   div.innerHTML = `<p class="meta">${user.username} <span>${time}</span></p> <p class="text"> ${message} </p>`;
   document.querySelector(`.chatMessages`).appendChild(div);
 }
-
+const clearList = (list) =>{
+  while(list.firstChild){
+    list.removeChild(list.firstChild);
+  }
+}
 const searchUser = async (event) =>{
   let filter = event.target.value;
 
