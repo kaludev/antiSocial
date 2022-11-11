@@ -170,7 +170,7 @@ form {
     font-size: 18px;
     padding: 5px 0px 5px 10px;
 }
-.inputContainer ul{
+#list{
     z-index: 99;
     list-style: none;
     position: relative;
@@ -178,17 +178,18 @@ form {
     margin-top: 0;
     background-color: #303245;
     border-radius: 0px 0px 10px 10px;
+    transition: 1s ease-in-out;
 }
-.inputContainer ul li a{
+#list li a{
     color: #fff;
     text-decoration: none;
 }
-.inputContainer ul li a div{
+#list li a div{
     margin-top: 0px;
     margin-bottom: 5px;
     padding: 10px;
 }
-label{
+.labelFile{
     display: inline-block;
     justify-content: center;
     background-color: var(--firstColor);
