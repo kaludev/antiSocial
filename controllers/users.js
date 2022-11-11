@@ -7,7 +7,8 @@ const hashPassword = require('../utils/hashPassword')
 const attachCookies = require('../utils/addCookies');
 const {importUser,getUserByUsername,getUserByEmail,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends, getUserById} = require('../database/userRepository')
 const errorWrapper = require('../middleware/ErrorWrapper')
-
+const path = require('path');
+const fs = require('fs');
 const mysql = require('../database/connect');
 const UnauthenticatedError = require('../errors/UnauthenticatedError');
 const comparePasswords = require('../utils/comparePassword');
@@ -81,10 +82,23 @@ const showMe = async (req,res) =>{
 }
 
 const upload = async (req, res) => {
-    console.log(req.body) // form files
-    console.log(req.file.filename) // form files
-    res.send(req.body.photo);
+    res.status(StatusCodes.ok).json({
+        ok:true,
+        message: 'picture uploaded successfully'
+    });
+}
 
+const profilePic = async (req,res) =>{
+    let username = req.params.username
+    if(!username) username = req.user.userName;
+    const data = await await errorWrapper(getUserByUsername,req,res)([username])
+    if(await fs.existsSync(path.join('images',data.id,'profile.png'))){
+    const direc = await path.join('images',data.id);
+    await res.status(StatusCodes.OK).sendFile('profile.png',{root:direc});
+    }else{
+        const direc = 'images';
+        await res.status(StatusCodes.OK).sendFile('profile.png',{root:direc});
+    }
 }
 const addFriend = async (req,res) =>{
     username = req.params.username;
@@ -156,4 +170,4 @@ const search = async (req,res) =>{
         data: result,
     })
 }
-module.exports = {register,login,showMe,upload,addFriend,acceptFriend,deleteFriend,getFriends,search};
+module.exports = {register,login,showMe,upload,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,search};
