@@ -13,6 +13,8 @@
             <div class="title">This is index</div>
             <div class="inputContainer">
                 <input type="text" class="input" id="search" placeholder="Search for names..">
+                <ul>
+                </ul>
             </div>
             <div class="inputContainer">
                 <input class="input" id="msg" type="text" placeholder="Enter Message" required autocomplete="off"/>
@@ -20,8 +22,11 @@
             <div class="btn">
                 <button type="submit" class="submit">Send</button>
             </div>
-            <div class="btn inputContainer">
-                <input type="file" id="inputFile">
+            <div class="btn">
+                <div class="inputContainer">
+                    <input type="file" id="inputFile">
+                    <label for="inputFile">Choose photo</label>
+                 </div>
                 <button type='button' id="sendFile" class="submit">Send file</button>
             </div>
         </form>

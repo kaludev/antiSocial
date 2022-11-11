@@ -117,7 +117,6 @@ form {
     background-color: var(--firstColor);
     border-radius: 12px;
     border: 0;
-    box-sizing: border-box;
     color: #eee;
     cursor: pointer;
     font-size: 18px;
@@ -170,4 +169,34 @@ form {
     font-weight: 200;
     font-size: 18px;
     padding: 5px 0px 5px 10px;
+}
+.inputContainer ul{
+    z-index: 99;
+    list-style: none;
+    position: relative;
+    padding-left: 20px;
+    margin-top: 0;
+    background-color: #303245;
+    border-radius: 0px 0px 10px 10px;
+}
+.inputContainer ul li a{
+    color: #fff;
+    text-decoration: none;
+}
+.inputContainer ul li a div{
+    margin-top: 0px;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+label{
+    display: inline-block;
+    justify-content: center;
+    background-color: var(--firstColor);
+    border-radius: 12px;
+    width: 50%;
+    user-select: none;
+    padding: 10px;
+}
+input[type="file"]{
+    display: none;
 }
