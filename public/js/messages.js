@@ -58,17 +58,14 @@ const clearList = (list) =>{
 }
 const searchUser = async (event) =>{
   let filter = event.target.value;
-  clearList(list);
+  let list = document.querySelector('#list');
+  
   if(filter) {
-    console.log(filter);
     const res = await fetch(`/api/users/search/${filter}`)
     const data = await res.json();
     const friends = await data.data;
-    let list = document.querySelector('#list');
-    console.log(friends);
-    
+    clearList(list);
     friends.forEach(user => {
-      console.log(user)
       let listElement = document.createElement('li');
       let link = document.createElement('a');
       link.href = `/${user}`;
@@ -78,6 +75,8 @@ const searchUser = async (event) =>{
       listElement.appendChild(link);
       list.appendChild(listElement);
     })
+  }else{
+    clearList(list);
   }
 }
 document.getElementById(`search`).addEventListener(`keyup`, searchUser);
