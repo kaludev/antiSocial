@@ -52,21 +52,23 @@ function outputMessage(user,message,time){
   document.querySelector(`.chatMessages`).appendChild(div);
 }
 const clearList = (list) =>{
-  while(list.firstChild){
+  while(list.children.length){
     list.removeChild(list.firstChild);
   }
 }
 const searchUser = async (event) =>{
   let filter = event.target.value;
-
+  clearList(list);
   if(filter) {
     console.log(filter);
     const res = await fetch(`/api/users/search/${filter}`)
     const data = await res.json();
     const friends = await data.data;
-    let list = document.querySelector('.input-container ul');
-    data.forEach(user => {
-      clearList(list);
+    let list = document.querySelector('#list');
+    console.log(friends);
+    
+    friends.forEach(user => {
+      console.log(user)
       let listElement = document.createElement('li');
       let link = document.createElement('a');
       link.href = `/${user}`;
@@ -74,6 +76,7 @@ const searchUser = async (event) =>{
       userData.textContent = user;
       link.appendChild(userData);
       listElement.appendChild(link);
+      list.appendChild(listElement);
     })
   }
 }
