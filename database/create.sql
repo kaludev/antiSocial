@@ -30,11 +30,3 @@ CREATE TABLE IF NOT EXISTS userFriends(
     FOREIGN KEY (userSourceId) REFERENCES user(id),
     FOREIGN KEY (userTargetId) REFERENCES user(id)
 );
-
-CREATE TABLE IF NOT EXISTS userLink(
-    id VARCHAR(20) PRIMARY KEY,
-    userSourceId VARCHAR(20) UNIQUE NOT NULL,
-    createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    userClicked VARCHAR(20),
-    FOREIGN KEY (userSourceId) REFERENCES user(id)
-);
