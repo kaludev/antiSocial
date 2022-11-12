@@ -1,13 +1,31 @@
 const moment = require('moment');
-const {importUser,getUserByUsername,getUserByEmail,getUserById} = require('../database/userRepository');
+const {importUser,getUserByUsername,getUserByEmail,getUserById, getUserFriends, setStatus} = require('../database/userRepository');
 const BadRequestError = require('../errors/BadRequestError');
 const {insertMessage, getMessagesBetween} = require('../database/messageRepository')
 module.exports = (io) =>{
     io.on('connection', async function(socket) {
         console.log('Authentication passed!');
-         socket.emit('success', {
+        try {
+          await setStatus(socket.id,true);
+          const data = await getUserFriends(socket.id);
+          data.forEach(async friend => {
+            let id;
+            if(friend.userTargetId === socket.id){
+              id = friend.userSourceId;
+            }else{
+              id = friend.userTargetId;
+            }
+            const user = await getUserById(id);
+            if(!user) throw new Error(`User undefdined`);
+            socket.to(id).emit('activity',{username:user.username, online:true});
+          });
+        }catch (err){
+          socket.emit('error', err.message);
+        }
+        socket.emit('success', {
           message: 'success logged in!',
           user: socket.request.user,
+          
         });
         socket.on('join',async room =>{
           if(room === socket.request.user.id){
@@ -39,5 +57,24 @@ module.exports = (io) =>{
             socket.emit('error',err.message)
           }
         });
+        socket.on('disconnect',  async () =>{
+          try {
+            await setStatus(socket.id,false);
+            const data = await getUserFriends(socket.id);
+            data.forEach(async friend => {
+              let id;
+              if(friend.userTargetId === socket.id){
+                id = friend.userSourceId;
+              }else{
+                id = friend.userTargetId;
+              }
+              const user = await getUserById(id);
+              if(!user) throw new Error(`User undefdined`);
+              socket.to(id).emit('activity',{username:user.username, online:true});
+            });
+          }catch (err){
+            socket.emit('error', err.message);
+          }
+        })
     });
 }

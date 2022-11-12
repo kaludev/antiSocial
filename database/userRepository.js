@@ -97,7 +97,7 @@ const deleteUserFriend = async (source, target) => {
 }
 
 const getUserFriends = async (source) => {
-    const data = await mysql.query('SELECT * from userFriends WHERE (userSourceID = ? OR userTargetID = ?) AND accepted = 1', 
+    const data = await mysql.query('SELECT userSourceId,userTargetId from userFriends WHERE (userSourceID = ? OR userTargetID = ?) AND accepted = 1', 
         [
             source,
             source
@@ -107,4 +107,11 @@ const getUserFriends = async (source) => {
 }
 
 
-module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends}
+const setStatus = async (source, status) =>{
+    const data = await mysql.query('UPDATE user SET status = ? WHERE id = ?',
+    [
+        status,
+        source
+    ]);
+}
+module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends,setStatus}
