@@ -1,5 +1,5 @@
 const express = require('express')
-const {register,login,showMe,logout,upload,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,search} = require('../controllers/users')
+const {register,login,showMe,logout,upload,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,getFriend,search} = require('../controllers/users')
 const auth = require('../middleware/auth');
 const photoParser = require('../middleware/photoParser');
 const router = express.Router();
@@ -15,6 +15,7 @@ router.route('/addfriend/:username').get(auth,addFriend);
 router.route('/acceptfriend/:username').get(auth,acceptFriend);
 router.route('/deletefriend/:username').get(auth,deleteFriend);
 router.route('/getfriends').get(auth,getFriends);
+router.route('/getfriend/:id').get(auth,getFriend);
 router.route('/search/:input').get(auth,search);
 
 module.exports = router

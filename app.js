@@ -24,6 +24,7 @@ const mysql = require('./database/connect');
 const socketErrorWrapper = require('./middleware/socketErrorWrapper');
 const photoParser = require('./middleware/photoParser');
 
+
 if(process.env.DEV == "true"){
     const data = readFileSync('./database/reset.sql','utf8');
     const dataArray = data.split('\r\n');

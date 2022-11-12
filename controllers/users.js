@@ -150,12 +150,33 @@ const deleteFriend = async (req, res) => {
 
 const getFriends = async (req,res) =>{
     const data = await (await errorWrapper(getUserFriends,req,res))([req.user.userId]);
+    let friends = [];
+    data.forEach(friend =>{
+        let id;
+        if(friend.userSourceId === req.user.userId){
+            id = friend.userTargetId;
+        }else{
+            id = friend.userSourceId;
+        }
+        friends.push({
+            id: id
+    })
+    });
     res.status(StatusCodes.OK).json({
         ok:true,
-        data: data
+        data: friends
     })
 }
-
+const getFriend = async (req,res) =>{
+    const id = req.params.id;
+    const user = await (await errorWrapper(getUserById,req,res))([id]);
+    if(!user) throw new BadRequestError(`User not found: ${id}`);
+    res.status(StatusCodes.OK).json({
+        ok:true,
+        username: user.username,
+        status:user.status
+    });
+}
 const search = async (req,res) =>{
     const input = req.params.input;
     const id = req.user.userId;
@@ -180,4 +201,4 @@ const search = async (req,res) =>{
 }
 
 
-module.exports = {register,login,showMe,logout,upload,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,search};
+module.exports = {register,login,showMe,logout,upload,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,getFriend,search};

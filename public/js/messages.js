@@ -1,9 +1,9 @@
 
-
 var socket = io('http://localhost:5000');
 
 const target = `luka.markovic1`;
 const chatMessages = document.querySelector(`.chatMessages`)
+
 
 // Connection succeeded
 socket.on('success', async function(data) {
@@ -14,6 +14,58 @@ socket.on('error', function(err) {
   throw new Error(err);
 });
 
+const setupFriends = (async () =>{
+  const res  = await fetch('/api/users/getfriends')
+  const data = await res.json();
+  if(!data.ok) throw new Error('error getting friends');
+  const friends = await data.data;
+  friends.forEach(async friend =>{
+    const friendRes = await fetch(`/api/users/getFriend/${friend.id}`);
+    const friendData = await friendRes.json();
+    if(!friendData.ok) throw new Error('error getting friend');
+    const el = document.createElement('div');
+    el.classList.add('mainFriend');
+    const pic = document.createElement('div');
+    pic.classList.add('profilePic');
+    pic.style.backgroundImage = `url(/api/users/profilePic/${friendData.username})`;
+    el.appendChild(pic);
+    const name = document.createElement('div');
+    name.classList.add('mainFriendName');
+    const friendName = document.createElement('span');
+    friendName.innerHTML = friendData.username;
+    name.appendChild(friendName);
+    const lastMessage = document.createElement('div');
+    lastMessage.classList.add('mainLastMessage');
+    await socket.emit('getMessagesBetween',friendData.username,1);
+    name.appendChild(lastMessage);
+    el.appendChild(name);
+    const activity = document.createElement('div');
+    activity.classList.add('activity');
+    activity.style.backgroundColor = friendData.status?'green':'red';
+    el.appendChild(activity);
+    document.querySelector('.mainFriends').appendChild(el);
+  })
+})()
+
+socket.on('messages', (username,messages) =>{
+  console.log(username);
+  console.log(messages);
+  if(messages.length >0){
+    document.querySelectorAll('.mainFriend').forEach(friend =>{
+      if(friend.querySelector('.mainFriendName').textContent === username ){
+        friend.querySelector('.mainLastMessage').textContent = messages[0].message;
+      }
+    });
+  }
+})
+
+socket.on('activity', (username,status) =>{
+    document.querySelectorAll('.mainFriend').forEach(friend =>{
+      if(friend.querySelector('.mainFriendName').textContent === username ){
+        friend.querySelector('.activity').style.backgroundColor = status?'green':'red';
+      }
+    });
+})
 const chatForm = document.getElementById(`chatForm`);
 
 //Join chatroom

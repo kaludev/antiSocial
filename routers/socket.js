@@ -39,8 +39,9 @@ module.exports = (io) =>{
               if(!data) throw new BadRequestError('userNotValid');
               //TODO:check if target is friend
               last = last || 20;
-              const messages = getMessagesBetween(socket.id,data.id,last);
-              socket.emit('data', messages);
+              const messages = await getMessagesBetween(socket.id,data.id,last);
+              
+              socket.emit('messages',targetUsername,messages);
             }catch(err){
               socket.emit('error',err.message)
             }
