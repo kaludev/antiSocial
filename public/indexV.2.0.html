@@ -12,7 +12,7 @@
 <body>
     <nav>
         <a href="#">
-            Logo here
+            <img src="./images/logo.png" alt="">
         </a>
         <div>
             <input type="text" id="search" placeholder="Search">
@@ -59,7 +59,7 @@
 
         </div>
         <div class="mainFriends">
-            <div class="mainFriend">
+            <div class="mainFriend br">
                 <div class="profilePic"></div>
                 <div class="mainFriendName">
                     <span>Username here</span> 
@@ -69,7 +69,7 @@
             </div>
         </div>
     </main>
-    <div class="messageBox active">
+    <div class="messageBox">
         <div class="messageBoxHeader">
             <div class="mainFriend">
                 <div class="profilePic"></div>
@@ -87,7 +87,7 @@
                 <input type='submit' class="inpuMessageSubmit" value='Send'>        
             </form>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
     <script src="./js/messages.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 </body>
 </html>
