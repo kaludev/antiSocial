@@ -93,7 +93,6 @@ document.querySelector(`#sendFile`).addEventListener(`click`,async (e) =>{
 })
 */
 document.querySelector(`.openChat`).addEventListener('click', e => {
-  e.preventDefault();
   document.querySelector(`.messageBox`).classList.add('active');
 });
 

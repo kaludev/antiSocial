@@ -69,7 +69,7 @@
             </div>
         </div>
     </main>
-    <div class="messageBox">
+    <div class="messageBox active">
         <div class="messageBoxHeader">
             <div class="mainFriend">
                 <div class="profilePic"></div>
@@ -82,12 +82,10 @@
         <div class="chatMessages">
             <div class="message"><p class="meta">Nikola Milanovic <span>9:21 pm</span></p> <p class="text"> Da li ovo konacno radi??? </p></div>
         </div>
-        <div class="inputMessageMain">
-            <form id = 'chatForm'>
+            <form class="inputMessageMain" id='chatForm'>
                 <input type='text' class="inputMessage" id="msg" placeholder='Message...'>
                 <input type='submit' class="inpuMessageSubmit" value='Send'>        
             </form>
-        </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./js/messages.js"></script>
