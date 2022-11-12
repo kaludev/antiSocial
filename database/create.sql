@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS user(
     email TEXT NOT NULL,
     password TEXT NOT NULL,
     regitreredAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-    confirmed BOOLEAN
+    confirmed BOOLEAN,
+    status BOOLEAN;
 );
 
 CREATE TABLE IF NOT EXISTS userMessages(

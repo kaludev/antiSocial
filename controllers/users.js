@@ -81,6 +81,13 @@ const showMe = async (req,res) =>{
     });
 }
 
+const logout = (req, res) => {
+    res.cookie("token", "logout", {
+		httpOnly: true,
+		expires: new Date(Date.now() - 24 * 60 * 60 * 1000),
+	});
+	res.status(StatusCodes.OK).json({ ok: true });
+}
 const upload = async (req, res) => {
     res.status(StatusCodes.OK).json({
         ok:true,
@@ -157,6 +164,7 @@ const search = async (req,res) =>{
         '%'+input+'%',
         id
     ]);
+    await mysql.end()
     let score = []
     data.forEach(user =>{
         let scoreNum = -user.cs.length/2 - 2*(user.cs.indexOf(input.toUpperCase()));
@@ -164,10 +172,12 @@ const search = async (req,res) =>{
     })
     score.sort((a,b) => {return b.scoreNum - a.scoreNum})
     let result = score.map(a => a.user.username);
-    await mysql.end()
+    
     res.status(StatusCodes.OK).json({
         ok:true,
         data: result,
     })
 }
-module.exports = {register,login,showMe,upload,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,search};
+
+
+module.exports = {register,login,showMe,logout,upload,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,search};
