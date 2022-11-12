@@ -35,14 +35,12 @@
             </li>
           </a>
         </ul>
-      </nav>
-      <main>
+    </nav>
+    <main>
         <div class="mainMenu">
-            <a href="">
-            <div>
+            <div class="openChat">
                 <ion-icon name="chatbubbles-outline"></ion-icon>
             </div>
-            </a>
             <a href="">
                 <div>
                     <ion-icon name="people-outline"></ion-icon>
@@ -67,8 +65,8 @@
                 <div class="activity"></div>
             </div>
         </div>
-      </main>
-      <div class="messageBox active">
+    </main>
+    <div class="messageBox">
         <div class="messageBoxHeader">
             <div class="mainFriend">
                 <div class="profilePic"></div>
@@ -85,6 +83,8 @@
             <input type='text' class="inputMessage" id="msg" placeholder='Message...'>
             <input type='submit' class="inpuMessageSubmit" value='Send'>    
         </div>
-      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/messages.js"></script>
 </body>
 </html>
