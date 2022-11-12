@@ -98,6 +98,9 @@ document.querySelector(`.openChat`).addEventListener('click', e => {
 });
 
 
+document.querySelector(`.messageBoxClose`).addEventListener('click', () => {
+  document.querySelector(`.messageBox`).classList.remove('active');
+})
 
 document.querySelector(`.logout`).addEventListener('click', async () =>{
     const res = await fetch("/api/users/logout",{
