@@ -17,7 +17,7 @@ module.exports = (io) =>{
             }
             const user = await getUserById(id);
             if(!user) throw new Error(`User undefdined`);
-            socket.to(id).emit('activity',{username:user.username, online:true});
+            socket.to(id).emit('activity',{username:socket.request.user.username, online:true});
           });
         }catch (err){
           socket.emit('error', err.message);
@@ -40,8 +40,7 @@ module.exports = (io) =>{
               //TODO:check if target is friend
               last = last || 20;
               const messages = await getMessagesBetween(socket.id,data.id,last);
-              
-              socket.emit('messages',targetUsername,messages);
+              socket.emit('messages',{username:targetUsername,messages: messages});
             }catch(err){
               socket.emit('error',err.message)
             }
@@ -72,7 +71,7 @@ module.exports = (io) =>{
               }
               const user = await getUserById(id);
               if(!user) throw new Error(`User undefdined`);
-              socket.to(id).emit('activity',{username:user.username, online:true});
+              socket.to(id).emit('activity',{username:socket.request.user.username, online:false});
             });
           }catch (err){
             socket.emit('error', err.message);
