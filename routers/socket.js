@@ -48,11 +48,12 @@ module.exports = (io) =>{
         socket.on("privateMessage", async (targetUsername, msg) => {
           try{
             //TODO:check if target is friend
-          const data = await getUserByUsername(targetUsername);
-          if(!data) throw new BadRequestError('userNotValid');
-          if(socket.id ===  data.id) throw new BadRequestError('u cannot send messages to yourself')
-          socket.to(data.id).emit("privateMessage", socket.request.user, msg,moment().format('h:mm a'));
-          await insertMessage(socket.id,data.id,msg);
+            const data = await getUserByUsername(targetUsername);
+            if(!data) throw new BadRequestError('userNotValid');
+            if(!msg) throw new BadRequestError('message cannot be empty');
+            if(socket.id ===  data.id) throw new BadRequestError('u cannot send messages to yourself')
+            socket.to(data.id).emit("privateMessage", socket.request.user, msg,moment().format('h:mm a'));
+            await insertMessage(socket.id,data.id,msg);
           }catch(err){
             socket.emit('error',err.message)
           }

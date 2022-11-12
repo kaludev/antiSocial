@@ -1,3 +1,10 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
 :root{
     --darkColor: #0b0b2c;
     --mainColor: #002C3E;
@@ -5,6 +12,7 @@
     --secondColor: #78BCC4;
     --lightColor: #F7F8F3;
 }
+
 body{
     margin: 0;
     padding: 0;
@@ -17,7 +25,7 @@ body{
     justify-content: center;
     height: 100vh;
 }
-form {
+#login{
     background-color: var(--darkColor);
     border-radius: 20px 0 0 20px;
     box-sizing: border-box;
@@ -29,6 +37,10 @@ form {
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+
+.messageForm{
+
 }
 .formImg{
     width: 100%;

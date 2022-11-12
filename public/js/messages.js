@@ -80,7 +80,7 @@ const searchUser = async (event) =>{
   }
 }
 document.getElementById(`search`).addEventListener(`keyup`, searchUser);
-
+/*
 document.querySelector(`#sendFile`).addEventListener(`click`,async (e) =>{
   e.preventDefault();
   const file = document.querySelector('#inputFile').files[0];
@@ -91,8 +91,18 @@ document.querySelector(`#sendFile`).addEventListener(`click`,async (e) =>{
     body: formData
   })
 })
-
+*/
 document.querySelector(`.openChat`).addEventListener('click', e => {
   e.preventDefault();
   document.querySelector(`.messageBox`).classList.add('active');
 });
+
+
+
+document.querySelector(`.logout`).addEventListener('click', async () =>{
+    const res = await fetch("/api/users/logout",{
+      method: 'POST'
+    });
+		const json = await res.json();
+		if(json.ok) window.location.href = "/login.html";
+})
