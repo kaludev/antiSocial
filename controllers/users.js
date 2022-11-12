@@ -82,7 +82,7 @@ const showMe = async (req,res) =>{
 }
 
 const upload = async (req, res) => {
-    res.status(StatusCodes.ok).json({
+    res.status(StatusCodes.OK).json({
         ok:true,
         message: 'picture uploaded successfully'
     });
