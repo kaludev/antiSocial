@@ -96,3 +96,13 @@ document.querySelector(`.openChat`).addEventListener('click', e => {
   e.preventDefault();
   document.querySelector(`.messageBox`).classList.add('active');
 });
+
+
+
+document.querySelector(`.logout`).addEventListener('click', async () =>{
+    const res = await fetch("/api/users/logout",{
+      method: 'POST'
+    });
+		const json = await res.json();
+		if(json.ok) window.location.href = "/login.html";
+})
