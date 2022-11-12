@@ -1,3 +1,19 @@
+document.querySelector(`.openChat`).addEventListener('click', e => {
+  document.querySelector(`.messageBox`).classList.add('active');
+});
+
+
+document.querySelector(`.messageBoxClose`).addEventListener('click', () => {
+  document.querySelector(`.messageBox`).classList.remove('active');
+})
+
+document.querySelector(`.logout`).addEventListener('click', async () =>{
+    const res = await fetch("/api/users/logout",{
+      method: 'POST'
+    });
+		const json = await res.json();
+		if(json.ok) window.location.href = "/login.html";
+})
 
 var socket = io('http://localhost:5000');
 
@@ -144,19 +160,3 @@ document.querySelector(`#sendFile`).addEventListener(`click`,async (e) =>{
   })
 })
 */
-document.querySelector(`.openChat`).addEventListener('click', e => {
-  document.querySelector(`.messageBox`).classList.add('active');
-});
-
-
-document.querySelector(`.messageBoxClose`).addEventListener('click', () => {
-  document.querySelector(`.messageBox`).classList.remove('active');
-})
-
-document.querySelector(`.logout`).addEventListener('click', async () =>{
-    const res = await fetch("/api/users/logout",{
-      method: 'POST'
-    });
-		const json = await res.json();
-		if(json.ok) window.location.href = "/login.html";
-})

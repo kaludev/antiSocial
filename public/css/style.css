@@ -1,10 +1,3 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-}
-
 :root{
     --darkColor: #0b0b2c;
     --mainColor: #002C3E;
@@ -12,7 +5,13 @@
     --secondColor: #78BCC4;
     --lightColor: #F7F8F3;
 }
-
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    scroll-behavior: smooth;
+}
 body{
     margin: 0;
     padding: 0;
@@ -37,9 +36,6 @@ body{
     display: flex;
     justify-content: center;
     flex-direction: column;
-}
-.messageForm{
-
 }
 .formImg{
     width: 100%;
@@ -193,14 +189,10 @@ body{
 input[type="file"]{
     display: none;
 }
-a{
-    --ionicon-stroke-width: 42;
-}
 nav{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #78BCC4;
 }
 nav ul{
     list-style: none;
@@ -213,28 +205,36 @@ nav ul li{
 }
 nav a{
     text-decoration: none;
-    color: #0b0b2c;
+    color: #064F68;
+}
+nav li{
+    --ionicon-stroke-width: 42;
     font-size: 20px;
+    color: #064F68;
+}
+nav img{
+    height: 50px;
+    width: 180px;
 }
 #search{
-    background-color: #303245;
+    background-color: #d5e1eb;
     border-radius: 20px;
     border: 0;
-    color: #eee;
+    color: #000;
     font-weight: 200;
     font-size: 18px;
     height: 100%;
     outline: 0;
-    padding: 10px;
+    padding: 10px 30px 10px 30px;
 }
 main{
     width: 100%;
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: space-between;
-    background-color: #0b0b2c;
+    justify-content: center;
     min-height: 100vh;
+    margin-top: 20px;
 }
 .mainMenu{
     display: flex;
@@ -242,7 +242,6 @@ main{
     align-items: center;
     height: fit-content;
     flex-direction: column;
-    background-color: #78BCC4;
     padding-top: 20px;
     font-size: 20px;
     width: 60px;
@@ -250,19 +249,19 @@ main{
 }
 .mainMenu div{
     padding: 20px;
+    color: #064F68;
+    --ionicon-stroke-width: 42;
 }
-.mainMenu a{
-    color: #0b0b2c;
+.mainMenu div:hover{
+    cursor: pointer;
 }
 .mainContent{
     width: 100%;
     max-width: 1200px;
-    background-color: #1769a7;
 }
 .mainFriends{
     min-width: 300px;
     width: 300px;
-    background-color: #65657b;
 }
 .mainFriend{
     position: relative;
@@ -270,9 +269,15 @@ main{
     flex-direction: row;
     align-items: center;
     justify-content: left;
-    background-color: #303245;
+    background-color: #d5e1eb;
     width: 100%;
     height: 50px;
+}
+.br{
+    border-radius: 10px;
+}
+.br1{
+    border-radius: 20px;
 }
 .mainFriendName{
     padding-left: 20px;
@@ -392,7 +397,8 @@ main{
     bottom: 0;
     min-height: 500px;
     min-width: 600px;
-    background-color: #78BCC4;
+    background-color: #d5e1eb;
+    animation: to-top 0.5s forwards;
 }
 .active{
     display: block;
@@ -412,7 +418,7 @@ main{
     max-height: 400px;
     height: 400px;
     width: 100%;
-    background-color: #0b0b2c;
+    background-color: #d5e1eb;
     overflow-y: auto;
     scrollbar-width: none;
     scroll-behavior: smooth;
@@ -443,6 +449,7 @@ main{
     bottom: 0;
     height: 50px;
     width: 100%;
+    border-top: 1px solid rgb(87, 189, 214,0.2);
 }
 .inputMessage{
     border: none;
@@ -464,3 +471,13 @@ main{
     cursor: pointer;
     appearance: none;
   }
+  @keyframes to-top {
+    0% {
+        transform: translateY(50%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
