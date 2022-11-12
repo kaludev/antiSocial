@@ -60,10 +60,31 @@
         <div class="mainFriends">
             <div class="mainFriend">
                 <div class="profilePic"></div>
-                <div class="mainFriendName">Ime i prezime</div>
+                <div class="mainFriendName">
+                    <span>Username here</span> 
+                    <div class="mainLastMessage">poslednja poruka here</div>
+                </div>
                 <div class="activity"></div>
             </div>
         </div>
       </main>
+      <div class="messageBox active">
+        <div class="messageBoxHeader">
+            <div class="mainFriend">
+                <div class="profilePic"></div>
+                <div class="mainFriendName">
+                    <span>Username here</span>
+                </div>
+                <div class="messageBoxClose"><ion-icon name="close-outline"></ion-icon></div>
+            </div>
+        </div>
+        <div class="chatMessages">
+            <div class="message"><p class="meta">Nikola Milanovic <span>9:21 pm</span></p> <p class="text"> Da li ovo konacno radi??? </p></div>
+        </div>
+        <div class="inputMessageMain">
+            <input type='text' class="inputMessage" id="msg" placeholder='Message...'>
+            <input type='submit' class="inpuMessageSubmit" value='Send'>    
+        </div>
+      </div>
 </body>
 </html>
