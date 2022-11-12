@@ -275,6 +275,7 @@ main{
 }
 .br{
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 .br1{
     border-radius: 20px;
@@ -291,6 +292,8 @@ main{
     height: 40px;
     border-radius: 50%;
     background-color: #78BCC4;
+    background-position: center;
+    background-size: cover;
     margin-left: 10px;
 }
 .activity{
@@ -306,18 +309,18 @@ main{
     width: 100%;
     padding: 0;
     margin: 0;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #0b0b2c;
     min-height: 100vh;
 }
 .profile{
     width: 100%;
     max-width: 1200px;
-    background-color: #1769a7;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .profliePicDiv{
     width: 40%;
@@ -327,14 +330,14 @@ main{
     align-items: center;
 }
 .profilePicMain{
-    height: 250px;
-    width: 250px;
+    height: 200px;
+    width: 200px;
     border-radius: 50%;
     background-color: #0b0b2c;
 }
 .profileDescDiv{
     width: 60%;
-    height: 300px;
+    height: 250px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -362,7 +365,6 @@ main{
 .profileContent{
     width: 100%;
     max-width: 1200px;
-    background-color: #002C3E;
     display: flex;
     justify-content: center;
     height: fit-content;
@@ -380,7 +382,6 @@ main{
     width: 200px;
     border-radius: 20px;
     margin: 20px;
-    background-color: #0b0b2c;
 }
 .profileContentDescDiv{
     width: 60%;
