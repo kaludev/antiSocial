@@ -80,8 +80,10 @@
             <div class="message"><p class="meta">Nikola Milanovic <span>9:21 pm</span></p> <p class="text"> Da li ovo konacno radi??? </p></div>
         </div>
         <div class="inputMessageMain">
-            <input type='text' class="inputMessage" id="msg" placeholder='Message...'>
-            <input type='submit' class="inpuMessageSubmit" value='Send'>    
+            <form id = 'chatForm'>
+                <input type='text' class="inputMessage" id="msg" placeholder='Message...'>
+                <input type='submit' class="inpuMessageSubmit" value='Send'>        
+            </form>
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
