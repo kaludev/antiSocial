@@ -16,12 +16,12 @@
         </a>
         <div>
             <input type="text" id="search" placeholder="Search">
-            <ul id = "list"></ul>
+            <ul id="list"></ul>
         </div>
         <ul>
           <a href="#">
             <li>
-                <ion-icon name="add-outline"></ion-icon>
+                </ion-icon><ion-icon name="home-outline"></ion-icon>
             </li>
           </a>
           <a href="/public/profile.html">
@@ -36,12 +36,17 @@
     </nav>
     <main>
         <div class="mainMenu">
+            <a href="">
+                <div>
+                    <ion-icon name="add-outline"></ion-icon>
+                </div>
+             </a>
             <div class="openChat">
                 <ion-icon name="chatbubbles-outline"></ion-icon>
             </div>
             <a href="">
                 <div>
-                    <ion-icon name="people-outline"></ion-icon>
+                    <ion-icon name="people-outline">
                 </div>
              </a>
              <a href="">
@@ -64,7 +69,7 @@
             </div>
         </div>
     </main>
-    <div class="messageBox">
+    <div class="messageBox active">
         <div class="messageBoxHeader">
             <div class="mainFriend">
                 <div class="profilePic"></div>
@@ -77,12 +82,10 @@
         <div class="chatMessages">
             <div class="message"><p class="meta">Nikola Milanovic <span>9:21 pm</span></p> <p class="text"> Da li ovo konacno radi??? </p></div>
         </div>
-        <div class="inputMessageMain">
-            <form id = 'chatForm'>
+            <form class="inputMessageMain" id='chatForm'>
                 <input type='text' class="inputMessage" id="msg" placeholder='Message...'>
                 <input type='submit' class="inpuMessageSubmit" value='Send'>        
             </form>
-        </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./js/messages.js"></script>
