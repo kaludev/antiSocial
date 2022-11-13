@@ -16,8 +16,9 @@ const insertMessage = async (source,target,msg) =>{
     if (data.affectedRows === 0) throw new Error('query error');
 }
 const getMessagesBetween = async (source,target,last) =>{
+    let data
     try{
-        const data = await mysql.query('SELECT message FROM userMessages WHERE (userSourceId = ? AND userTargetId = ?) OR (userTargetId = ? AND userSourceId = ?) ORDER BY createdAt ASC LIMIT ? ',
+        data = await mysql.query('SELECT message FROM userMessages WHERE (userSourceId = ? AND userTargetId = ?) OR (userTargetId = ? AND userSourceId = ?) ORDER BY createdAt ASC LIMIT ? ',
             [
             target,
             source,
@@ -27,15 +28,12 @@ const getMessagesBetween = async (source,target,last) =>{
             ]
         )
         await mysql.end();
-        console.log(data)
-        if(data[0])
-        console.log(data[0].message)
     }catch(err){
         console.log(err);
         data = [];
 
     }finally{
-        
+        console.log(data)
         return data;
     }
 }

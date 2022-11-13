@@ -43,6 +43,7 @@ const setupFriends = (async () =>{
     if(!friendData.ok) throw new Error('error getting friend');
     const el = document.createElement('div');
     el.classList.add('mainFriend');
+    el.classList.add('br');
     const pic = document.createElement('div');
     pic.classList.add('profilePic');
     pic.style.backgroundImage = `url(/api/users/profilePic/${friendData.username})`;
@@ -65,22 +66,25 @@ const setupFriends = (async () =>{
   })
 })()
 
-socket.on('messages', (username,messages) =>{
-  console.log(username);
-  console.log(messages);
-  if(messages.length >0){
+socket.on('messages', data =>{
+  console.log(data.username);
+  console.log(data.messages);
+  if(data.messages.length >0){
     document.querySelectorAll('.mainFriend').forEach(friend =>{
-      if(friend.querySelector('.mainFriendName').textContent === username ){
-        friend.querySelector('.mainLastMessage').textContent = messages[0].message;
+      if(friend.querySelector('.mainFriendName span').textContent === data.username ){
+        friend.querySelector('.mainLastMessage').textContent = data.messages[0].message;
       }
     });
   }
 })
 
-socket.on('activity', (username,status) =>{
+socket.on('activity', data =>{
+  console.log(data)
     document.querySelectorAll('.mainFriend').forEach(friend =>{
-      if(friend.querySelector('.mainFriendName').textContent === username ){
-        friend.querySelector('.activity').style.backgroundColor = status?'green':'red';
+      console.log(friend.querySelector('.mainFriendName span').textContent )
+      console.log(data.username)
+      if(friend.querySelector('.mainFriendName span').textContent === data.username ){
+        friend.querySelector('.activity').style.backgroundColor = data.online?'green':'red';
       }
     });
 })
