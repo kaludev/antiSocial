@@ -5,7 +5,7 @@ const {uid} = require('uid')
 const {StatusCodes} = require('http-status-codes')
 const hashPassword = require('../utils/hashPassword')
 const attachCookies = require('../utils/addCookies');
-const {importUser,getUserByUsername,getUserByEmail,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends, getUserById} = require('../database/userRepository')
+const {importUser,getUserByUsername,getUserByEmail,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends, getUserById, getUserRequests} = require('../database/userRepository')
 const errorWrapper = require('../middleware/ErrorWrapper')
 const path = require('path');
 const fs = require('fs');
@@ -167,6 +167,14 @@ const getFriends = async (req,res) =>{
         data: friends
     })
 }
+
+const getRequests = async (req, res) => {
+    const data = await (await errorWrapper(getUserRequests,req,res))([req.user.userId]);
+    res.status(StatusCodes.OK).json({
+        ok:true,
+        data: data
+    })
+}
 const getFriend = async (req,res) =>{
     const id = req.params.id;
     const user = await (await errorWrapper(getUserById,req,res))([id]);
@@ -201,4 +209,4 @@ const search = async (req,res) =>{
 }
 
 
-module.exports = {register,login,showMe,logout,upload,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,getFriend,search};
+module.exports = {register,login,showMe,logout,upload,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,getRequests,getFriend,search};
