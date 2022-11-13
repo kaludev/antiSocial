@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <title>antiSocial</title>
+</head>
+<body>
+    <nav>
+        <a href="/public/index.html">
+            <img src="./images/logo.png" alt="">
+        </a>
+        <div>
+            <input type="text" id="search" placeholder="Search">
+            <ul id = "list"></ul>
+        </div>
+        <ul>
+          <a href="/public/index.html">
+            <li>
+            </ion-icon><ion-icon name="home-outline"></ion-icon>
+            </li>
+          </a>
+          <a href="/public/profile.html">
+            <li>
+                <ion-icon name="person-outline"></ion-icon>
+            </li>
+          </a>
+            <li class="logout">
+                <ion-icon name="log-out-outline"></ion-icon>
+            </li>
+        </ul>
+    </nav>
+    <div class="mainProfile">
+        <div class="profile">
+            <div class="profliePicDiv">
+                <div class="profilePicMain"></div>
+            </div>
+            <div class="profileDescDiv">
+                <div class="profileName">Luka Markovic</div>
+                <div class="profileUsername"><span class="statistics">@markoviicckaluu_</span></div>
+                <div class="profileData">
+                    <div class="profileChats"><span class="statistics">23</span> likes</div>
+                    <div class="profileFriends"><span class="statistics">117</span> friends</div>
+                </div>
+                <div class="profileData">
+                    <button class="addFriend">Add friend</button>
+                    <button class="addFriend">Message</button>
+                    <button class="addFriend"><ion-icon name="heart-outline"></ion-icon></button>
+                </div>
+            </div>
+        </div>
+        <div class="profileContent">  
+        </div>
+    </div>
+    <footer>
+        <section>
+          <div class="info">
+            <div class="infoCol">
+              <h6>
+                <a href="https://github.com/nickola23" target="_blank" class="text-white text-decoration-none">about us</a>
+              </h6>
+            </div>
+            <div class="infoCol">
+              <h6>
+                <a href="https://apod.nasa.gov/apod/astropix.html" target="_blank" class="text-white text-decoration-none">resources</a>
+              </h6>
+            </div>
+            <div class="infoCol">
+              <h6>
+                <a href="https://api.nasa.gov/" target="_blank" class="text-white text-decoration-none">nasa`s api</a>
+              </h6>
+            </div>
+            <div class="infoCol">
+              <h6>
+                <a href="https://discord.gg/SfY45wHatm" target="_blank" class="text-white text-decoration-none">Contact</a>
+              </h6>
+            </div>
+          </div>
+        </section>
+        <hr/>
+        <section class="footerDesc">
+          <div>
+            <div class="footerDescText">
+              <p>
+                Project developed for use in schools using the NASA`s API
+              </p>
+            </div>
+          </div>
+        </section>
+        <section class="social">
+          <a href="https://discord.gg/SfY45wHatm" target="_blank">
+            <ion-icon name="logo-discord"></ion-icon>
+          </a>
+        </section>
+      <div class="text-center p-3">
+        ©2022 Copyright:
+        <a class="text-white text-decoration-none" href="https://github.com/nickola23" target="_blank">Nikola Milanovic</a>
+      </div>
+    </footer>
+</body>
+<script src="./js/profile.js"></script>
+</html>

@@ -1,13 +1,20 @@
+document.querySelectorAll(`.targetProfile`).forEach(function(e){
+  e.addEventListener('click', e => {
+    window.location.href="./targetProfile.html";
+  });
+  });
+
 document.querySelectorAll(`.openChat`).forEach(function(e){
 e.addEventListener('click', e => {
   document.querySelector(`.messageBox`).classList.add('active');
 });
 });
 
-
 document.querySelector(`.messageBoxClose`).addEventListener('click', () => {
   document.querySelector(`.messageBox`).classList.remove('active');
 })
+
+
 
 document.querySelector(`.logout`).addEventListener('click', async () =>{
     const res = await fetch("/api/users/logout",{
