@@ -5,39 +5,106 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>Welcome</title>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <title>antiSocial</title>
 </head>
 <body>
-    <div class="formBg">
-        <form id="chatForm">
-            <div class="title">This is index</div>
-            <div class="inputContainer">
-                <input type="text" class="input" id="search" placeholder="Search for names..">
-                <ul id = "list">
-                </ul>
+    <nav id="nav">
+        <a href="#">
+            <img src="./images/logo.png" alt="">
+        </a>
+        <div>
+            <input type="text" id="search" placeholder="Search">
+            <ul id="list"></ul>
+        </div>
+        <ul>
+          <a href="#">
+            <li>
+                </ion-icon><ion-icon name="home"></ion-icon>
+            </li>
+          </a>
+          <a href="/public/profile.html">
+            <li>
+                <ion-icon name="person-outline"></ion-icon>
+            </li>
+          </a>
+            <li class="logout">
+                <ion-icon name="log-out-outline"></ion-icon>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <div class="mainMenu">
+            <a href="">
+                <div>
+                    <ion-icon name="add-outline"></ion-icon>
+                </div>
+             </a>
+            <div class="openChat">
+                <ion-icon name="chatbubbles-outline"></ion-icon>
             </div>
-            <div class="inputContainer">
-                <input class="input" id="msg" type="text" placeholder="Enter Message" required autocomplete="off"/>
+            <a href="">
+                <div>
+                    <ion-icon name="people-outline">
+                </div>
+             </a>
+             <a href="#nav">
+                <div>
+                    <ion-icon name="search-outline"></ion-icon>
+                </div>
+            </a>
+        </div>
+        <div class="mainContent">
+
+        </div>
+        <div class="mainFriends">
+            <div class="mainFriend openChat br">
+                <div class="profilePic"></div>
+                <div class="mainFriendName">
+                    <span>Username here</span> 
+                    <div class="mainLastMessage">poslednja poruka here</div>
+                </div>
+                <div class="activity"></div>
             </div>
-            <div class="btn">
-                <button type="submit" class="submit">Send</button>
-            </div>
-            <div class="btn">
-                <div class="inputContainer">
-                    <input type="file" id="inputFile">
-                    <label class="labelFile" for="inputFile">Choose photo</label>
-                 </div>
-                <button type='button' id="sendFile" class="submit">Send file</button>
-            </div>
-        </form>
-        <div class="formImg">
-            <div class="chatMessages">
-                <div class="message"><p class="meta">Nikola Milanovic <span>9:21 pm</span></p> <p class="text"> Da li ovo konacno radi??? </p></div>
+            <div class="friendRequest">
+                <div class="mainFriendRequest br">
+                    <div class="profilePic tc"></div>
+                    <div class="mainFriendName tc">
+                        <span>Username here</span> 
+                        <div class="mainLastMessage">wants to add you as friend</div>
+                    </div>
+                    <div class="friendButton friendAccept">Accept</div>
+                    <div class="friendButton friendDecline">Decline</div>
+                </div>
+                <div class="friendRequestContent">
+                    <div class="profileData pt">
+                        <div class="profileChats"><span class="statistics">23</span> likes</div>
+                        <div class="profileFriends"><span class="statistics">117</span> friends</div>
+                    </div>
+                </div>
+          </div>
+        </div>
+    </main>
+    <div class="messageBox br1">
+        <div class="messageBoxHeader">
+            <div class="mainFriend br1">
+                <div class="profilePic"></div>
+                <div class="mainFriendName">
+                    <span>Username here</span>
+                </div>
+                <div class="messageBoxClose"><ion-icon name="close-outline"></ion-icon></div>
             </div>
         </div>
+        <div class="chatMessages">
+            <div class="message"><p class="meta">Nikola Milanovic <span>9:21 pm</span></p> <p class="text"> Da li ovo konacno radi??? </p></div>
+        </div>
+            <form class="inputMessageMain" id='chatForm'>
+                <input type='text' class="inputMessage" id="msg" placeholder='Message...'>
+                <input type='submit' class="inpuMessageSubmit" value='Send'>        
+            </form>
     </div>
-    
-    <script src="/socket.io/socket.io.js"></script>
     <script src="./js/messages.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 </body>
 </html>
