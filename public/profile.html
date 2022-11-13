@@ -11,7 +11,7 @@
 </head>
 <body>
     <nav>
-        <a href="/public/indexV.2.0.html">
+        <a href="/public/index.html">
             <img src="./images/logo.png" alt="">
         </a>
         <div>
@@ -19,27 +19,30 @@
             <ul id = "list"></ul>
         </div>
         <ul>
-          <a href="/public/indexV.2.0.html">
+          <a href="/public/index.html">
             <li>
             </ion-icon><ion-icon name="home-outline"></ion-icon>
             </li>
           </a>
           <a href="">
             <li>
-                <ion-icon name="person-outline"></ion-icon>
+                <ion-icon name="person"></ion-icon>
             </li>
           </a>
-          <a href="#">
-            <li>
+            <li class="logout">
                 <ion-icon name="log-out-outline"></ion-icon>
             </li>
-          </a>
         </ul>
       </nav>
       <div class="mainProfile">
         <div class="profile">
             <div class="profliePicDiv">
-                <div class="profilePicMain"></div>
+                <div class="profilePicMain">
+                    <div class="updateProfilePic">
+                        <input type="file" id="inputFile">
+                        <label class="labelFile" for="inputFile"><ion-icon name="cloud-upload-outline"></ion-icon></label>
+                    </div>
+                </div>
             </div>
             <div class="profileDescDiv">
                 <div class="profileName">Nikola Milanovic</div>
@@ -49,9 +52,9 @@
                     <div class="profileFriends"><span class="statistics">117</span> friends</div>
                 </div>
                 <div class="profileData">
-                    <button>Add friend</button>
-                    <button>Message</button>
-                    <button><ion-icon name="heart-outline"></ion-icon></button>
+                    <button class="addFriend">Add friend</button>
+                    <button class="addFriend">Message</button>
+                    <button class="addFriend"><ion-icon name="heart-outline"></ion-icon></button>
                 </div>
             </div>
         </div>

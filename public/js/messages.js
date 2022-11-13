@@ -1,5 +1,7 @@
-document.querySelector(`.openChat`).addEventListener('click', e => {
+document.querySelectorAll(`.openChat`).forEach(function(e){
+e.addEventListener('click', e => {
   document.querySelector(`.messageBox`).classList.add('active');
+});
 });
 
 
