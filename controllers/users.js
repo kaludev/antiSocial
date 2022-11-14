@@ -5,7 +5,7 @@ const {uid} = require('uid')
 const {StatusCodes} = require('http-status-codes')
 const hashPassword = require('../utils/hashPassword')
 const attachCookies = require('../utils/addCookies');
-const {importUser,getUserByUsername,getUserByEmail,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends, getUserById, getUserRequests} = require('../database/userRepository')
+const {importUser,getUserByUsername,getUserByEmail,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends, getUserById, getUserRequests, getLikes} = require('../database/userRepository')
 const errorWrapper = require('../middleware/ErrorWrapper')
 const path = require('path');
 const fs = require('fs');
@@ -95,6 +95,15 @@ const upload = async (req, res) => {
     });
 }
 
+const like = async (req, res) => {
+
+    
+};
+
+const dislike = async (req, res) => {
+
+};
+
 const profilePic = async (req,res) =>{
     let username = req.params.username
     if(!username) username = req.user.userName;
@@ -179,10 +188,13 @@ const getFriend = async (req,res) =>{
     const id = req.params.id;
     const user = await (await errorWrapper(getUserById,req,res))([id]);
     if(!user) throw new BadRequestError(`User not found: ${id}`);
+    const likes = await (await errorWrapper(getLikes,req,res))([id]);
+    likesNum = likes.length;
     res.status(StatusCodes.OK).json({
         ok:true,
         username: user.username,
-        status:user.status
+        status:user.status,
+        likes:likesNum
     });
 }
 const search = async (req,res) =>{
@@ -209,4 +221,4 @@ const search = async (req,res) =>{
 }
 
 
-module.exports = {register,login,showMe,logout,upload,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,getRequests,getFriend,search};
+module.exports = {register,login,showMe,logout,upload,like,dislike,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,getRequests,getFriend,search};

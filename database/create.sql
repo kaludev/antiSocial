@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS user(
     password TEXT NOT NULL,
     regitreredAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
     confirmed BOOLEAN,
-    status BOOLEAN;
+    status BOOLEAN NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS userMessages(
@@ -31,3 +31,11 @@ CREATE TABLE IF NOT EXISTS userFriends(
     FOREIGN KEY (userSourceId) REFERENCES user(id),
     FOREIGN KEY (userTargetId) REFERENCES user(id)
 );
+
+CREATE TABLE IF NOT EXISTS userLikes (
+    id VARCHAR(20) PRIMARY KEY,
+    userSourceId VARCHAR(20) NOT NULL,
+    userTargetId VARCHAR(20) NOT NULL,
+    FOREIGN KEY (userSourceId) REFERENCES user(id),
+    FOREIGN KEY (userTargetId) REFERENCES user(id)
+)

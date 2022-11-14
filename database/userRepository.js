@@ -115,7 +115,14 @@ const getUserRequests = async (source) =>{
     return data;
 
 }
-
+const getLikes = async (source) =>{
+    const data = await mysql.query('SELECT * FROM userLikes WHERE userTargetId =?',
+    [
+        source
+    ]);
+    await mysql.end()
+    return data;
+}
 const setStatus = async (source, status) =>{
     const data = await mysql.query('UPDATE user SET status = ? WHERE id = ?',
     [
@@ -123,4 +130,4 @@ const setStatus = async (source, status) =>{
         source
     ]);
 }
-module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends,getUserRequests,setStatus}
+module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends,getUserRequests,getLikes,setStatus}

@@ -40,12 +40,12 @@ socket.on('error', function(err) {
 });
 
 const setupFriends = (async () =>{
-  const res  = await fetch('/api/users/getfriends')
+  const res  = await fetch('/api/friends/getfriends')
   const data = await res.json();
   if(!data.ok) throw new Error('error getting friends');
   const friends = await data.data;
   friends.forEach(async friend =>{
-    const friendRes = await fetch(`/api/users/getFriend/${friend.id}`);
+    const friendRes = await fetch(`/api/friends/getFriend/${friend.id}`);
     const friendData = await friendRes.json();
     if(!friendData.ok) throw new Error('error getting friend');
     const el = document.createElement('div');
