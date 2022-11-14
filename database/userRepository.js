@@ -130,4 +130,44 @@ const setStatus = async (source, status) =>{
         source
     ]);
 }
-module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends,getUserRequests,getLikes,setStatus}
+
+const areUsersFriends = async (source,target) =>{
+    const data = await mysql.query('SELECT * FROM userFriends WHERE (userSourceId =? AND userTargetId =?) OR (userSourceId =? AND userTargetId =?) AND accepted = 1',
+    [
+        source,
+        target,
+        target,
+        source
+    ]);
+    if(data.length === 0){
+        return false;
+    }else{
+        return true;
+    }
+}
+const isRequestSent = async (source,target) =>{
+    const data = await mysql.query('SELECT * FROM userFriends WHERE (userSourceId =? AND userTargetId =?) AND accepted = 0',
+    [
+        source,
+        target
+    ]);
+    if(data.length === 0){
+        return false;
+    }else{
+        return true;
+    }
+}
+const isRequestPending = async (source,target) =>{
+    const data = await mysql.query('SELECT * FROM userFriends WHERE (userSourceId =? AND userTargetId =?) AND accepted = 0',
+    [
+        target,
+        source
+    ]);
+    if(data.length === 0){
+        return false;
+    }else{
+        return true;
+    }
+}
+
+module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends,getUserRequests,getLikes,setStatus,areUsersFriends,isRequestPending,isRequestSent}
