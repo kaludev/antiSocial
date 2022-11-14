@@ -96,7 +96,6 @@ const upload = async (req, res) => {
 
 const like = async (req, res) => {
 
-    
 };
 
 const dislike = async (req, res) => {

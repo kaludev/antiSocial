@@ -132,7 +132,7 @@ const setStatus = async (source, status) =>{
 }
 
 const areUsersFriends = async (source,target) =>{
-    const data = await mysql.query('SELECT * FROM userFriends WHERE (userSourceId =? AND userTargetId =?) OR (userSourceId =? AND userTargetId =?) AND accepted = 1',
+    const data = await mysql.query('SELECT * FROM userFriends WHERE ((userSourceId =? AND userTargetId =?) OR (userSourceId =? AND userTargetId =?)) AND accepted = 1',
     [
         source,
         target,
