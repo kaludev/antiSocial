@@ -12,6 +12,7 @@ const cors = require('cors');
 const xss = require('xss-clean');
 
 const userRouter = require('./routers/user')
+const friendRouter = require('./routers/friend')
 const notFound= require('./middleware/NotFound')
 const errorHandler = require('./middleware/errorHandler')
 const jwtAuth = require('./middleware/socketJwtAuth')
@@ -23,7 +24,6 @@ const server = http.createServer(app);
 const mysql = require('./database/connect');
 const socketErrorWrapper = require('./middleware/socketErrorWrapper');
 const photoParser = require('./middleware/photoParser');
-
 
 if(process.env.DEV == "true"){
     const data = readFileSync('./database/reset.sql','utf8');
@@ -48,7 +48,7 @@ setupIO(io)
 
 
 app.use("/api/users",userRouter)
-
+app.use("/api/friends",friendRouter)
 
 app.use(notFound);
 app.use(errorHandler);
