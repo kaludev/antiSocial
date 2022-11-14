@@ -335,6 +335,10 @@ main{
 .mainFriendName{
     padding-left: 20px;
 }
+.mainFriendRequestName{
+    text-align: center;
+    padding-top: 5px;
+}
 .mainLastMessage{
     font-size: 14px;
     color: #5E5E5E;
@@ -420,7 +424,7 @@ main{
     flex-direction: row;
     width: 100%;
     font-size: 16px;
-    padding-top: 60px;
+    padding-top: 50px;
 }
 .statistics{
     font-weight: bold;
@@ -438,7 +442,6 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-messageBoxClocolor: #78BCC4;
 }
 .profileContentPicMain{
     height: 300px;
@@ -559,16 +562,12 @@ main{
 .addFriend:active {
     letter-spacing: 2px;
 }
-.tc{
-    text-align: center;
-    margin: 0;
-}
-.pt{
-    padding-top: 50px;
-}
 .targetProfile{
     cursor: pointer;
     user-select: none;
+}
+.openChat{
+    cursor: pointer;
 }
 footer{
     position: relative;
@@ -579,13 +578,20 @@ footer section{
 }
 .info{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     text-align: center;
     justify-content: center;
-    padding-top: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .infoCol{
     width: 100%;
+    font-size: 22px;
+    margin-top: 15px;
+}
+.infoCol a{
+    text-decoration: none;
+    color: #000;
 }
 .infoCol h6{
     text-transform: uppercase;
@@ -593,7 +599,10 @@ footer section{
     margin-top: 10px;
 }
 footer hr{
-    margin: 30px 0px;
+    border: none;
+    height: 1px;
+    background-color: #064F68;
+    margin-top: 30px;
 }
 .footerDesc{
     margin-bottom: 30px;
@@ -605,6 +614,7 @@ footer hr{
 }
 .footerDescText{
     width: 100%;
+    padding: 15px;
 }
 .social{
     text-align: center;
@@ -613,19 +623,66 @@ footer hr{
 .social a{
     text-decoration: none;
     color: #000;
-    margin-right: 15px;
+    font-size: 32px;
+    padding-left: 2%;
+    padding-right: 2%;
 }
-@media only screen and (min-width: 992px){
-    .footerDescText{
-        width: 66.66%;
-    }
+.line{
+    position: relative;
+}
+.line::before{
+    left: 0;
+    top: 50%;
+    position: absolute;
+    width: 30%;
+    content: '';
+    border-top: 0;
+}
+.line::after{
+    right: 0;
+    top: 50%;
+    position: absolute;
+    width: 30%;
+    content: '';
+    border-top: 0;
+}
+.footerCopyright{
+    padding-bottom: 20px;
+}
+.footerCopyright a{
+    color: #0b0b2c;
+}
+.footerLogo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+footer img{
+    height: 100px;
+    width: 360px;
+    margin: 15px;
 }
 @media only screen and (min-width: 768px){
     .infoCol{
-        width: 16.66%;
+        margin-top: 0;
+    }
+    .footerLogo{
+        flex-direction: column;
+    }
+}
+@media only screen and (min-width: 600px){
+    .info{
+        flex-direction: row;
     }
     .infoCol{
-        margin-top: 0;
+        margin-top: 0px;
+    }
+    .line::before{
+        border-top: 1px solid #064F68;
+    }
+    .line::after{
+        border-top: 1px solid #064F68;
     }
 }
   @keyframes to-top {
