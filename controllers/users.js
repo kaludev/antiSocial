@@ -4,7 +4,7 @@ const {uid} = require('uid')
 const {StatusCodes} = require('http-status-codes')
 const hashPassword = require('../utils/hashPassword')
 const attachCookies = require('../utils/addCookies');
-const {importUser,getUserByUsername,getUserByEmail, getUserById} = require('../database/userRepository')
+const {importUser,getUserByUsername,getUserByEmail, getUserById, likeUser, dislikeUser} = require('../database/userRepository')
 const errorWrapper = require('../middleware/ErrorWrapper')
 const path = require('path');
 const fs = require('fs');
@@ -95,11 +95,28 @@ const upload = async (req, res) => {
 }
 
 const like = async (req, res) => {
-
+    const username = req.params.username;
+    if(!username) throw new BadRequestError('Username is defined');
+    const target = await (await errorWrapper(getUserByUsername,req,res))([username])
+    if(!target) throw new BadRequestError('User with username ' + username + ' not found');
+    if(target.id == req.user.userId) throw new BadRequestError(' you cannot like yourself');
+    await (await errorWrapper(likeUser,req,res))([req.user.userId,target.id])
+    res.status(StatusCodes.OK).json({
+        ok:true,
+        username: username
+    })
 };
 
 const dislike = async (req, res) => {
-
+    const username = req.params.username;
+    if(!username) throw new BadRequestError('Username is defined');
+    const target = await (await errorWrapper(getUserByUsername,req,res))([username])
+    if(!target) throw new BadRequestError('User with username ' + username + ' not found');
+    await (await errorWrapper(dislikeUser,req,res))([req.user.userId,target.id])
+    res.status(StatusCodes.OK).json({
+        ok:true,
+        username: username
+    })
 };
 
 const profilePic = async (req,res) =>{

@@ -7,7 +7,7 @@ const errorWrapper = require("../middleware/ErrorWrapper");
 const addFriend = async (req,res) =>{
     username = req.params.username;
     if(!username) throw new BadRequestError('Username is required');
-    const data = await await errorWrapper(getUserByUsername,req,res)([username]);
+    const data = await (await errorWrapper(getUserByUsername,req,res))([username]);
     if(!data) throw new BadRequestError(`User not found: ${username}`);
     if(data.id == req.user.userId) throw new BadRequestError('you cannot be friends with yourself')
     await await errorWrapper(importUserFriend,req,res)([req.user.userId,data.id,'false']);
@@ -78,7 +78,7 @@ const getFriend = async (req,res) =>{
     const areFriends = await (await errorWrapper(areUsersFriends,req,res))([sourceId,id]);
     const isRequestSended = await (await errorWrapper(isRequestSent,req,res))([sourceId,id]);
     const isReqPending = await (await errorWrapper(isRequestPending,req,res))([sourceId,id])
-    likesNum = likes.length;
+    likesNum = await likes.length;
     res.status(StatusCodes.OK).json({
         ok:true,
         username: user.username,

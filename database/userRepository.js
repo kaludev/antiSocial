@@ -129,6 +129,8 @@ const setStatus = async (source, status) =>{
         status,
         source
     ]);
+    await mysql.end()
+    
 }
 
 const areUsersFriends = async (source,target) =>{
@@ -139,6 +141,7 @@ const areUsersFriends = async (source,target) =>{
         target,
         source
     ]);
+    await mysql.end()
     if(data.length === 0){
         return false;
     }else{
@@ -151,6 +154,7 @@ const isRequestSent = async (source,target) =>{
         source,
         target
     ]);
+    await mysql.end()
     if(data.length === 0){
         return false;
     }else{
@@ -163,11 +167,39 @@ const isRequestPending = async (source,target) =>{
         target,
         source
     ]);
+    await mysql.end()
     if(data.length === 0){
         return false;
     }else{
         return true;
     }
 }
+const likeUser = async (source, target) =>{
+    const id = uid(20)
+    const data = await mysql.query('SELECT * FROM userLikes WHERE userSourceId = ? AND userTargetId =?',
+    [
+        source,
+        target
+    ]);
+    await mysql.end()
+    if(data.length >0) throw new BadRequestError('You already liked this user');
+    const res = await mysql.query('INSERT INTO userLikes(id,userSourceId,userTargetId) VALUES (?,?,?)',
+    [
+        id,
+        source,
+        target
+    ]);
+    await mysql.end()
+    if(res.affectedRows === 0) throw new Error('Data not updated');
+}
 
-module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends,getUserRequests,getLikes,setStatus,areUsersFriends,isRequestPending,isRequestSent}
+const dislikeUser = async (source,target) =>{
+    const data = await mysql.query('DELETE FROM userLikes WHERE userSourceId = ? AND userTargetId = ?',
+    [
+        source,
+        target
+    ]);
+    await mysql.end()
+    if(data.affectedRows === 0) throw new Error('data not deleted');
+}
+module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends,getUserRequests,getLikes,setStatus,areUsersFriends,isRequestPending,isRequestSent,likeUser,dislikeUser}
