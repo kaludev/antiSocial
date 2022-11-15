@@ -91,4 +91,26 @@ const getFriend = async (req,res) =>{
 }
 
 
-module.exports = {addFriend,acceptFriend,deleteFriend,getFriends,getRequests,getFriend}
+const getFriendByUsername = async (req,res) =>{
+    const sourceId = req.user.userId;
+    const username = req.params.username;
+    const user = await (await errorWrapper(getUserByUsername,req,res))([username]);
+    if(!user) throw new BadRequestError(`User not found: ${username}`);
+    const id = user.id;
+    const likes = await (await errorWrapper(getLikes,req,res))([id]);
+    const areFriends = await (await errorWrapper(areUsersFriends,req,res))([sourceId,id]);
+    const isRequestSended = await (await errorWrapper(isRequestSent,req,res))([sourceId,id]);
+    const isReqPending = await (await errorWrapper(isRequestPending,req,res))([sourceId,id])
+    likesNum = await likes.length;
+    res.status(StatusCodes.OK).json({
+        ok:true,
+        id: id,
+        status:user.status,
+        likes:likesNum,
+        areFriends:areFriends,
+        isRequestPending:isReqPending,
+        isRequestSent:isRequestSended
+    });
+}
+
+module.exports = {addFriend,acceptFriend,deleteFriend,getFriends,getRequests,getFriend,getFriendByUsername}
