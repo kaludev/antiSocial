@@ -39,10 +39,72 @@ socket.on('error', function(err) {
   throw new Error(err);
 });
 
+let friendsDiv = document.querySelector('.mainFriends')
+const setupRequests  =(async () =>{
+  const res  = await fetch('/api/friends/getrequests')
+  const data = await res.json();
+  if(!data.ok) throw new Error(data.message);
+  const requests = await data.data;
+  requests.forEach(async request =>{
+    const requestRes = await fetch(`/api/friends/getFriend/${request.userSourceId}`);
+    const requestData = await requestRes.json();
+    if(!requestData.ok) throw new Error(requestData.message);
+    const el  = document.createElement('div');
+    el.classList.add('friendRequest');
+    const frequest = document.createElement('div');
+    frequest.classList.add('mainFriendRequest');
+    frequest.classList.add('br');
+    const pic = document.createElement('div');
+    pic.classList.add('profilePic');
+    pic.style.backgroundImage = `url(/api/users/profilePic/${requestData.username}`
+    const nameDiv = document.createElement('div');
+    nameDiv.classList.add('mainFriendRequestName');
+    const username = document.createElement('span');
+    username.classList.add('targetProfile');
+    username.innerHTML = requestData.username;
+    const lastMessage = document.createElement('div')
+    lastMessage.classList.add('mainLastMessage');
+    lastMessage.innerHTML = 'wants to add you as friend';
+    nameDiv.appendChild(username);
+    nameDiv.appendChild(lastMessage);
+    const accept = document.createElement('div');
+    accept.classList.add('friendButton');
+    accept.classList.add('friendAccept');
+    accept.textContent = 'Accept';
+    const decline = document.createElement('div');
+    decline.classList.add('friendButton');
+    decline.classList.add('friendDecline');
+    decline.textContent = 'Decline'
+    frequest.appendChild(pic);
+    frequest.appendChild(nameDiv);
+    frequest.appendChild(accept);
+    frequest.appendChild(decline);
+    const frequestcontent = document.createElement('div')
+    const profileData = document.createElement('div');
+    profileData.classList.add('profileData');
+    profileData.classList.add('pt');
+    const chats = document.createElement('div');
+    chats.classList.add('profileChats');
+    const likeStatistic = document.createElement('span');
+    likeStatistic.classList.add('statistics');
+    likeStatistic.textContent = requestData.likes + ' likes';
+    chats.appendChild(likeStatistic);
+    const Friends = document.createElement('div');
+    const friendStatistic = document.createElement('span');
+    friendStatistic.classList.add('statistics');
+    //friendStatistic.textContent = requestData.friendNum;
+    profileData.appendChild(chats);
+    profileData.appendChild(Friends);
+    frequestcontent.appendChild(profileData);
+    el.appendChild(frequest);
+    el.appendChild(frequestcontent);
+    friendsDiv.appendChild(el)
+  })
+})()
 const setupFriends = (async () =>{
   const res  = await fetch('/api/friends/getfriends')
   const data = await res.json();
-  if(!data.ok) throw new Error('error getting friends');
+  if(!data.ok) throw new Error(data.message);
   const friends = await data.data;
   friends.forEach(async friend =>{
     const friendRes = await fetch(`/api/friends/getFriend/${friend.id}`);
@@ -51,6 +113,7 @@ const setupFriends = (async () =>{
     const el = document.createElement('div');
     el.classList.add('mainFriend');
     el.classList.add('br');
+    el.classList.add('openChat');
     const pic = document.createElement('div');
     pic.classList.add('profilePic');
     pic.style.backgroundImage = `url(/api/users/profilePic/${friendData.username})`;
@@ -69,9 +132,12 @@ const setupFriends = (async () =>{
     activity.classList.add('activity');
     activity.style.backgroundColor = friendData.status?'green':'red';
     el.appendChild(activity);
-    document.querySelector('.mainFriends').appendChild(el);
+    friendsDiv.appendChild(el);
   })
 })()
+
+
+
 
 socket.on('messages', data =>{
   console.log(data.username);
