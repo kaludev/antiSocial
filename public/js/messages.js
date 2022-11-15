@@ -53,7 +53,6 @@ const setupRequests  =(async () =>{
     el.classList.add('friendRequest');
     const frequest = document.createElement('div');
     frequest.classList.add('mainFriendRequest');
-    frequest.classList.add('br');
     const pic = document.createElement('div');
     pic.classList.add('profilePic');
     pic.style.backgroundImage = `url(/api/users/profilePic/${requestData.username}`
@@ -85,14 +84,9 @@ const setupRequests  =(async () =>{
     profileData.classList.add('pt');
     const chats = document.createElement('div');
     chats.classList.add('profileChats');
-    const likeStatistic = document.createElement('span');
-    likeStatistic.classList.add('statistics');
-    likeStatistic.textContent = requestData.likes + ' likes';
-    chats.appendChild(likeStatistic);
+    chats.innerHTML = '<span class="statistics">'+requestData.likes + '</span> likes';
     const Friends = document.createElement('div');
-    const friendStatistic = document.createElement('span');
-    friendStatistic.classList.add('statistics');
-    //friendStatistic.textContent = requestData.friendNum;
+    Friends.innerHTML = '<span class="statistics">'+requestData.friendNum+ '</span> friends';
     profileData.appendChild(chats);
     profileData.appendChild(Friends);
     frequestcontent.appendChild(profileData);

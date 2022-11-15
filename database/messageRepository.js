@@ -29,11 +29,10 @@ const getMessagesBetween = async (source,target,last) =>{
         )
         await mysql.end();
     }catch(err){
-        console.log(err);
+        console.error(err);
         data = [];
 
     }finally{
-        console.log(data)
         return data;
     }
 }
