@@ -129,5 +129,77 @@ const setStatus = async (source, status) =>{
         status,
         source
     ]);
+    await mysql.end()
+    
 }
-module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends,getUserRequests,getLikes,setStatus}
+
+const areUsersFriends = async (source,target) =>{
+    const data = await mysql.query('SELECT * FROM userFriends WHERE ((userSourceId =? AND userTargetId =?) OR (userSourceId =? AND userTargetId =?)) AND accepted = 1',
+    [
+        source,
+        target,
+        target,
+        source
+    ]);
+    await mysql.end()
+    if(data.length === 0){
+        return false;
+    }else{
+        return true;
+    }
+}
+const isRequestSent = async (source,target) =>{
+    const data = await mysql.query('SELECT * FROM userFriends WHERE (userSourceId =? AND userTargetId =?) AND accepted = 0',
+    [
+        source,
+        target
+    ]);
+    await mysql.end()
+    if(data.length === 0){
+        return false;
+    }else{
+        return true;
+    }
+}
+const isRequestPending = async (source,target) =>{
+    const data = await mysql.query('SELECT * FROM userFriends WHERE (userSourceId =? AND userTargetId =?) AND accepted = 0',
+    [
+        target,
+        source
+    ]);
+    await mysql.end()
+    if(data.length === 0){
+        return false;
+    }else{
+        return true;
+    }
+}
+const likeUser = async (source, target) =>{
+    const id = uid(20)
+    const data = await mysql.query('SELECT * FROM userLikes WHERE userSourceId = ? AND userTargetId =?',
+    [
+        source,
+        target
+    ]);
+    await mysql.end()
+    if(data.length >0) throw new BadRequestError('You already liked this user');
+    const res = await mysql.query('INSERT INTO userLikes(id,userSourceId,userTargetId) VALUES (?,?,?)',
+    [
+        id,
+        source,
+        target
+    ]);
+    await mysql.end()
+    if(res.affectedRows === 0) throw new Error('Data not updated');
+}
+
+const dislikeUser = async (source,target) =>{
+    const data = await mysql.query('DELETE FROM userLikes WHERE userSourceId = ? AND userTargetId = ?',
+    [
+        source,
+        target
+    ]);
+    await mysql.end()
+    if(data.affectedRows === 0) throw new Error('data not deleted');
+}
+module.exports = {importUser,getUserByUsername,getUserByEmail,getUserById,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends,getUserRequests,getLikes,setStatus,areUsersFriends,isRequestPending,isRequestSent,likeUser,dislikeUser}

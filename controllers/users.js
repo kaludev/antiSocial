@@ -1,11 +1,10 @@
 const BadRequestError = require('../errors/BadRequestError');
-const EmailValidator = require('../utils/EmailValidator');
 const ValidateEmail = require('../utils/EmailValidator')
 const {uid} = require('uid')
 const {StatusCodes} = require('http-status-codes')
 const hashPassword = require('../utils/hashPassword')
 const attachCookies = require('../utils/addCookies');
-const {importUser,getUserByUsername,getUserByEmail,importUserFriend,acceptUserFriend,deleteUserFriend,getUserFriends, getUserById, getUserRequests, getLikes} = require('../database/userRepository')
+const {importUser,getUserByUsername,getUserByEmail, getUserById, likeUser, dislikeUser} = require('../database/userRepository')
 const errorWrapper = require('../middleware/ErrorWrapper')
 const path = require('path');
 const fs = require('fs');
@@ -96,12 +95,28 @@ const upload = async (req, res) => {
 }
 
 const like = async (req, res) => {
-
-    
+    const username = req.params.username;
+    if(!username) throw new BadRequestError('Username is defined');
+    const target = await (await errorWrapper(getUserByUsername,req,res))([username])
+    if(!target) throw new BadRequestError('User with username ' + username + ' not found');
+    if(target.id == req.user.userId) throw new BadRequestError(' you cannot like yourself');
+    await (await errorWrapper(likeUser,req,res))([req.user.userId,target.id])
+    res.status(StatusCodes.OK).json({
+        ok:true,
+        username: username
+    })
 };
 
 const dislike = async (req, res) => {
-
+    const username = req.params.username;
+    if(!username) throw new BadRequestError('Username is defined');
+    const target = await (await errorWrapper(getUserByUsername,req,res))([username])
+    if(!target) throw new BadRequestError('User with username ' + username + ' not found');
+    await (await errorWrapper(dislikeUser,req,res))([req.user.userId,target.id])
+    res.status(StatusCodes.OK).json({
+        ok:true,
+        username: username
+    })
 };
 
 const profilePic = async (req,res) =>{
@@ -116,87 +131,7 @@ const profilePic = async (req,res) =>{
         await res.status(StatusCodes.OK).sendFile('profile.png',{root:direc});
     }
 }
-const addFriend = async (req,res) =>{
-    username = req.params.username;
-    console.log(username)
-    console.log(req.user.userId)
 
-    const data = await await errorWrapper(getUserByUsername,req,res)([username]);
-    if(!data) throw new BadRequestError(`User not found: ${username}`);
-    if(!username) throw new BadRequestError('Username is required');
-    if(data.id == req.user.userId) throw new BadRequestError('you cannot be friends with yourself')
-    await await errorWrapper(importUserFriend,req,res)([req.user.userId,data.id,'false']);
-    res.status(StatusCodes.OK).json({
-        ok:true,
-        username: username
-    })
-}
-
-const acceptFriend = async (req, res) =>{
-    username = req.params.username;
-    if(!username) throw new BadRequestError('Username is required');
-    const data = await await errorWrapper(getUserByUsername,req,res)([username]);
-    if(!data) throw new BadRequestError(`User not found: ${username}`);
-    await await errorWrapper(acceptUserFriend,req,res)([req.user.userId,data.id]);
-    res.status(StatusCodes.OK).json({
-        ok:true,
-        username: username
-    })
-}
-
-
-const deleteFriend = async (req, res) => {
-    username = req.params.username;
-    if(!username) throw new BadRequestError('Username is required');
-    const data = await errorWrapper(getUserByUsername,req,res)([username]);
-    if(!data) throw new Error(`User not found: ${username}`);
-    await deleteUserFriend(req.user.userId,data.id);
-    res.status(StatusCodes.OK).json({
-        ok:true,
-        username: username
-    })
-}
-
-const getFriends = async (req,res) =>{
-    const data = await (await errorWrapper(getUserFriends,req,res))([req.user.userId]);
-    let friends = [];
-    data.forEach(friend =>{
-        let id;
-        if(friend.userSourceId === req.user.userId){
-            id = friend.userTargetId;
-        }else{
-            id = friend.userSourceId;
-        }
-        friends.push({
-            id: id
-    })
-    });
-    res.status(StatusCodes.OK).json({
-        ok:true,
-        data: friends
-    })
-}
-
-const getRequests = async (req, res) => {
-    const data = await (await errorWrapper(getUserRequests,req,res))([req.user.userId]);
-    res.status(StatusCodes.OK).json({
-        ok:true,
-        data: data
-    })
-}
-const getFriend = async (req,res) =>{
-    const id = req.params.id;
-    const user = await (await errorWrapper(getUserById,req,res))([id]);
-    if(!user) throw new BadRequestError(`User not found: ${id}`);
-    const likes = await (await errorWrapper(getLikes,req,res))([id]);
-    likesNum = likes.length;
-    res.status(StatusCodes.OK).json({
-        ok:true,
-        username: user.username,
-        status:user.status,
-        likes:likesNum
-    });
-}
 const search = async (req,res) =>{
     const input = req.params.input;
     const id = req.user.userId;
@@ -221,4 +156,4 @@ const search = async (req,res) =>{
 }
 
 
-module.exports = {register,login,showMe,logout,upload,like,dislike,profilePic,addFriend,acceptFriend,deleteFriend,getFriends,getRequests,getFriend,search};
+module.exports = {register,login,showMe,logout,upload,like,dislike,profilePic,search};
