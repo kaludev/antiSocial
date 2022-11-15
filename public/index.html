@@ -16,7 +16,7 @@
             <img src="./images/logo.png" alt="">
         </a>
         <div>
-            <input type="text" id="search" placeholder="Search">
+            <input class="searchActive" type="text" id="search" placeholder="Search">
             <ul id="list"></ul>
         </div>
         <ul>
@@ -50,11 +50,14 @@
                     <ion-icon name="people-outline">
                 </div>
              </a>
-             <a href="#nav">
-                <div>
-                    <ion-icon name="search-outline"></ion-icon>
+              <a href="/public/profile.html">
+                <div class="second">
+                    <ion-icon name="person-outline"></ion-icon>
                 </div>
-            </a>
+              </a>
+            <div class="logout second">
+                    <ion-icon name="log-out-outline"></ion-icon>
+            </div>
         </div>
         <div class="mainContent">
 
@@ -69,7 +72,7 @@
                 <div class="activity"></div>
             </div>
             <div class="friendRequest">
-                <div class="mainFriendRequest br">
+                <div class="mainFriendRequest">
                     <div class="profilePic"></div>
                     <div class="mainFriendRequestName">
                         <span class="targetProfile">Username here</span>

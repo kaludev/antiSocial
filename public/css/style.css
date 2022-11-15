@@ -201,10 +201,11 @@ input[type="file"]{
 }
 nav{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 nav ul{
+    display: none;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -230,6 +231,7 @@ nav img{
     cursor: pointer;
 }
 #search{
+    display: none;
     background-color: #d5e1eb;
     border-radius: 20px;
     border: 0;
@@ -273,6 +275,7 @@ main{
     max-width: 1200px;
 }
 .mainFriends{
+    display: none;
     min-width: 300px;
     width: 300px;
 }
@@ -293,6 +296,7 @@ main{
     background-color: #aed7f7;
     border-radius: 12px;
     flex-direction: column;
+    margin: 10px 0 10px 0;
 }
 .mainFriendRequest{
     position: relative;
@@ -303,6 +307,7 @@ main{
     background-color: #d5e1eb;
     width: 100%;
     height: 110px;
+    border-radius: 12px;
 }
 .friendButton{
     display: flex;
@@ -327,7 +332,7 @@ main{
 }
 .br{
     border-radius: 10px;
-    margin-bottom: 10px;
+    margin: 10px 0 10px;
 }
 .br1{
     border-radius: 20px;
@@ -375,6 +380,7 @@ main{
     width: 100%;
     max-width: 1200px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -386,8 +392,8 @@ main{
     align-items: center;
 }
 .profilePicMain{
-    height: 200px;
-    width: 200px;
+    min-height: 200px;
+    min-width: 200px;
     border-radius: 50%;
     position: relative;
     background-color: #0b0b2c;
@@ -463,7 +469,8 @@ main{
     right: 0;
     bottom: 0;
     min-height: 500px;
-    min-width: 600px;
+    width: 100%;
+    max-width: 600px;
     background-color: #d5e1eb;
     animation: to-top 0.5s forwards;
 }
@@ -531,7 +538,6 @@ main{
 .inpuMessageSubmit{
     background: #0b0b2c;
     color: #fff;
-    width: 10%;
     padding: 10px 15px 10px 15px;
     margin: 5px;
     border-radius: 4px;
@@ -660,15 +666,30 @@ footer hr{
 }
 footer img{
     height: 100px;
-    width: 360px;
-    margin: 15px;
+    width: 100%;
+    max-width: 360px;
+    margin: 0px;
+}
+.second{
+    display: block;
+}
+@media only screen and (min-width: 992px){
+    .mainFriends{
+        display: block;
+    }
 }
 @media only screen and (min-width: 768px){
+    #search{
+        display: block;
+    }
     .infoCol{
         margin-top: 0;
     }
     .footerLogo{
         flex-direction: column;
+    }
+    .profile{
+        flex-direction: row;
     }
 }
 @media only screen and (min-width: 600px){
@@ -683,6 +704,18 @@ footer img{
     }
     .line::after{
         border-top: 1px solid #064F68;
+    }
+    nav{
+        justify-content: space-around;
+    }
+    nav ul{
+        display: block;
+    }
+    .second{
+        display: none;
+    }
+    .footer img{
+        margin: 15px;
     }
 }
   @keyframes to-top {
