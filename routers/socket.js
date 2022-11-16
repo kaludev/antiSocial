@@ -1,10 +1,9 @@
 const moment = require('moment');
-const {importUser,getUserByUsername,getUserByEmail,getUserById, getUserFriends, setStatus} = require('../database/userRepository');
+const {getUserByUsername,getUserById, getUserFriends, setStatus} = require('../database/userRepository');
 const BadRequestError = require('../errors/BadRequestError');
 const {insertMessage, getMessagesBetween} = require('../database/messageRepository')
 module.exports = (io) =>{
     io.on('connection', async function(socket) {
-        console.log('Authentication passed!');
         try {
           await setStatus(socket.id,true);
           const data = await getUserFriends(socket.id);
@@ -27,11 +26,6 @@ module.exports = (io) =>{
           user: socket.request.user,
           
         });
-        socket.on('join',async room =>{
-          if(room === socket.request.user.id){
-            console.log(socket.id + " now in rooms ", socket.rooms);
-          }
-        })
         socket.on("getMessagesBetween", async (targetUsername,last) =>{
             try{
               if(!targetUsername) throw new BadRequestError('targetUsername is required');

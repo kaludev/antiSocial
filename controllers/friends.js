@@ -72,6 +72,7 @@ const getRequests = async (req, res) => {
 const getFriend = async (req,res) =>{
     const sourceId = req.user.userId;
     const id = req.params.id;
+    const data = await (await errorWrapper(getUserFriends,req,res))([id]);
     const user = await (await errorWrapper(getUserById,req,res))([id]);
     if(!user) throw new BadRequestError(`User not found: ${id}`);
     const likes = await (await errorWrapper(getLikes,req,res))([id]);
@@ -86,7 +87,8 @@ const getFriend = async (req,res) =>{
         likes:likesNum,
         areFriends:areFriends,
         isRequestPending:isReqPending,
-        isRequestSent:isRequestSended
+        isRequestSent:isRequestSended,
+        friendNum: data.length
     });
 }
 
