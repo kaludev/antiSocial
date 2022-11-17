@@ -6,11 +6,16 @@ import {
 } from "react-router-dom";
 import Login from './pages/loginAndRegister/login';
 import Register from './pages/loginAndRegister/register'
+import Home from './pages/Home/Home'
 import "./style.css"
 function App() {
   return (
     <Router>
       <Routes>
+        <Route 
+          exact path = '/'
+          element ={<Home />}
+        />
         <Route
           exact path="/login"
           element= {<Login />} 
