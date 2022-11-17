@@ -4,7 +4,8 @@ import {
 	Routes,
 	Route
 } from "react-router-dom";
-import Login from './pages/login';
+import Login from './pages/loginAndRegister/login';
+import Register from './pages/loginAndRegister/register'
 import "./style.css"
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
         <Route
           exact path="/login"
           element= {<Login />} 
+          />
+          <Route
+          exact path="/register"
+          element= {<Register />} 
           />
         <Route 
           path="*"

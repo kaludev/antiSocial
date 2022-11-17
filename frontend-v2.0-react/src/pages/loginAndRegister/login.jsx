@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import "./loginAndRegister.css"
 
 const initialFormData = {
@@ -8,8 +8,8 @@ const initialFormData = {
 }
 function Login(){
     const [formData,setFormData] = useState(initialFormData);
-
-
+    const navigate = useNavigate();
+    
     function handleChange(e){
         setFormData({...formData,[e.target.name]:e.target.value});
     }
@@ -19,7 +19,7 @@ function Login(){
         e.preventDefault();
         try{
             
-            const res = await fetch("/api/users/login", {
+            const res = await fetch("http://localhost:5000/api/users/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -29,7 +29,7 @@ function Login(){
             const json = await res.json();
             console.log(json)
             if(!json.ok) throw new Error(json.message);
-            
+            navigate("/")
         }
         catch(error){
             alert(error);
