@@ -1,0 +1,20 @@
+:root{
+    --darkColor: #0b0b2c;
+    --mainColor: #002C3E;
+    --firstColor: #1769a7;
+    --secondColor: #78BCC4;
+    --lightColor: #F7F8F3;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    scroll-behavior: smooth;
+}
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
