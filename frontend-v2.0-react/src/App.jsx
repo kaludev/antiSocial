@@ -9,9 +9,13 @@ import Register from './pages/loginAndRegister/register'
 import Home from './pages/Home/Home'
 import "./style.css"
 import Profile from './pages/profile/profile';
+import ContextProvider from './context/stateContext';
+
+
 function App() {
   return (
     <Router>
+      <ContextProvider />
       <Routes>
         <Route 
           exact path = '/'

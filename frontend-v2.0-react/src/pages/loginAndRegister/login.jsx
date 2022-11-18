@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import {Link,useNavigate} from 'react-router-dom'
+import { useStateContext } from "../../context/stateContext";
 import "./loginAndRegister.css"
 
 const initialFormData = {
@@ -9,7 +10,7 @@ const initialFormData = {
 function Login(){
     const [formData,setFormData] = useState(initialFormData);
     const navigate = useNavigate();
-    
+    const [setUser] = useStateContext();
     function handleChange(e){
         setFormData({...formData,[e.target.name]:e.target.value});
     }
@@ -29,6 +30,7 @@ function Login(){
             const json = await res.json();
             console.log(json)
             if(!json.ok) throw new Error(json.message);
+            setUser(json.user);
             navigate("/")
         }
         catch(error){

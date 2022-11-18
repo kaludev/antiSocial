@@ -28,10 +28,11 @@ const register = async (req,res) =>{
     
     attachCookies(res,{id,username,email});
     res.status(StatusCodes.OK).json({
-        "ok":"true",
-        "user":{
-            "email":email,
-            "username":username
+        ok:true,
+        user:{
+            id:id,
+            email:email,
+            username:username
         }
     })
 }
@@ -57,9 +58,11 @@ const login = async (req,res) =>{
     attachCookies(res,{id:data.id,username:data.username,email:data.email});
     res.status(StatusCodes.OK).json({
         ok:true,
-        id:data.id,
-        email:data.email,
-        username: data.username
+        user:{
+            id:data.id,
+            email:data.email,
+            username: data.username
+        }
     })
 }
 

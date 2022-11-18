@@ -6,7 +6,9 @@ import {IonIcon} from '@ionic/react'
 import { homeOutline,person,logOutOutline} from 'ionicons/icons'
 
 function Navbar(){
-
+    function logout(){
+        
+    }
     return(
         <nav>
             <Link to="/">
@@ -27,7 +29,7 @@ function Navbar(){
                         <IonIcon icon={person}></IonIcon>
                     </li>
                 </Link>
-                    <li className="logout">
+                    <li onClick={logout} className="logout">
                         <IonIcon icon={logOutOutline}></IonIcon>
                     </li>
             </ul>
