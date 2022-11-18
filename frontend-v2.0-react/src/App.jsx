@@ -8,6 +8,7 @@ import Login from './pages/loginAndRegister/login';
 import Register from './pages/loginAndRegister/register'
 import Home from './pages/Home/Home'
 import "./style.css"
+import Profile from './pages/profile/profile';
 function App() {
   return (
     <Router>
@@ -23,6 +24,10 @@ function App() {
           <Route
           exact path="/register"
           element= {<Register />} 
+          />
+          <Route
+          exact path="/:username"
+          element= {<Profile />}
           />
         <Route 
           path="*"

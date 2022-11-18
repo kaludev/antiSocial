@@ -1,42 +1,20 @@
 import React,{useState} from "react";
 import {Link,useNavigate} from 'react-router-dom'
 import "./profileStyle.css"
-
-
-function Profile(){
+import Navbar from "../../components/Navbar/Navbar";
+import {IonIcon} from '@ionic/react'
+import {cloudUploadOutline} from 'ionicons/icons'
+function Profiles(){
     return (
     <>
-        <nav>
-            <Link to="/public/index.html">
-                <img src="./images/logo.png" alt="" />
-            </Link>
-            <div>
-                <input type="text" id="search" placeholder="Search" />
-                <ul id = "list"></ul>
-            </div>
-            <ul>
-                <Link to="/public/index.html">
-                    <li>
-                        <ion-icon name="home-outline"></ion-icon>
-                    </li>
-                </Link>
-                <Link to="">
-                    <li>
-                        <ion-icon name="person"></ion-icon>
-                    </li>
-                </Link>
-                    <li className="logout">
-                        <ion-icon name="log-out-outline"></ion-icon>
-                    </li>
-            </ul>
-        </nav>
+        <Navbar />
         <div className="mainProfile">
             <div className="profile">
                 <div className="profliePicDiv">
                     <div className="profilePicMain">
                         <div className="updateProfilePic">
                             <input type="file" id="inputFile" />
-                            <label className="labelFile" for="inputFile"><ion-icon name="cloud-upload-outline"></ion-icon></label>
+                            <label className="labelFile" htmlFor="inputFile"><IonIcon icon={cloudUploadOutline}></IonIcon></label>
                         </div>
                     </div>
                 </div>
@@ -60,4 +38,4 @@ function Profile(){
 }
 
 
-export default Profile;
+export default Profiles;

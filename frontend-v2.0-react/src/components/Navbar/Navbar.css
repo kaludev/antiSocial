@@ -1,0 +1,91 @@
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+nav ul{
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+nav ul li{
+    display: inline-block;
+    padding: 20px;
+}
+nav a{
+    text-decoration: none;
+    color: #064F68;
+}
+nav li{
+    --ionicon-stroke-width: 42;
+    font-size: 20px;
+    color: #064F68;
+}
+nav img{
+    height: 50px;
+    width: 180px;
+}
+.logout{
+    cursor: pointer;
+}
+#search{
+    display: none;
+    background-color: #d5e1eb;
+    border-radius: 20px;
+    border: 0;
+    color: #000;
+    font-weight: 200;
+    font-size: 18px;
+    height: 100%;
+    outline: 0;
+    padding: 10px 30px 10px 30px;
+}
+
+@media only screen and (min-width: 768px){
+    #search{
+        display: block;
+    }
+    #login{
+        border-radius: 20px 0 0 20px;
+    }
+    #register{
+        border-radius: 20px 0 0 20px;
+    }
+    .infoCol{
+        margin-top: 0;
+    }
+    .footerLogo{
+        flex-direction: column;
+    }
+    .profile{
+        flex-direction: row;
+    }
+    .formImg{
+        display: block;
+    }
+}
+
+@media only screen and (min-width: 600px){
+    .info{
+        flex-direction: row;
+    }
+    .infoCol{
+        margin-top: 0px;
+    }
+    .line::before{
+        border-top: 1px solid #064F68;
+    }
+    .line::after{
+        border-top: 1px solid #064F68;
+    }
+    nav{
+        justify-content: space-around;
+    }
+    nav ul{
+        display: block;
+    }
+    .footer img{
+        margin: 15px;
+    }
+}
