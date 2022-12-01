@@ -15,7 +15,7 @@ import ContextProvider from './context/stateContext';
 function App() {
   return (
     <Router>
-      <ContextProvider />
+      <ContextProvider>
       <Routes>
         <Route 
           exact path = '/'
@@ -43,6 +43,7 @@ function App() {
           }
         />
       </Routes>
+      </ContextProvider>
 		</Router>
   );
 }

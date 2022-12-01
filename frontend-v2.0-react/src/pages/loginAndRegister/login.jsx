@@ -10,7 +10,7 @@ const initialFormData = {
 function Login(){
     const [formData,setFormData] = useState(initialFormData);
     const navigate = useNavigate();
-    const [setUser] = useStateContext();
+    const {setUser} = useStateContext();
     function handleChange(e){
         setFormData({...formData,[e.target.name]:e.target.value});
     }
@@ -20,7 +20,7 @@ function Login(){
         e.preventDefault();
         try{
             
-            const res = await fetch("http://localhost:5000/api/users/login", {
+            const res = await fetch("/api/users/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -28,7 +28,6 @@ function Login(){
                 body: JSON.stringify(formData)
             }) 
             const json = await res.json();
-            console.log(json)
             if(!json.ok) throw new Error(json.message);
             setUser(json.user);
             navigate("/")

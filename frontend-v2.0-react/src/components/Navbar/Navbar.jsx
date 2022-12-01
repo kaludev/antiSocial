@@ -4,10 +4,21 @@ import './Navbar.css';
 import logo from '../../images/logo.png'
 import {IonIcon} from '@ionic/react'
 import { homeOutline,person,logOutOutline} from 'ionicons/icons'
+import { useStateContext } from '../../context/stateContext';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar(){
-    function logout(){
-        
+    const {setUser} = useStateContext();
+    const navigate = useNavigate();
+    async function logout(){
+        const res = await fetch('/api/users/logout',{
+            method: 'POST'
+
+        });
+        const data = await res.json();
+        if(!data.ok) throw new Error(data.message);
+        setUser(null);
+        navigate('/login')
     }
     return(
         <nav>

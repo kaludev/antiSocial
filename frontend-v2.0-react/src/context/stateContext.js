@@ -11,8 +11,7 @@ export default function ContextProvider({children}) {
         <StateContext.Provider
 			value={{
 				user, setUser,
-				socket,setSocket,
-                onLogin
+				socket,setSocket
 			}}
 		>
 			{children}

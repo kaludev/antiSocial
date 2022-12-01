@@ -73,9 +73,11 @@ const showMe = async (req,res) =>{
 
     res.status(StatusCodes.OK).json({
         ok:true,
-        id:id,
-        email:data.email,
-        username:data.username
+        user:{
+            id:id,
+            email:data.email,
+            username:data.username
+        }
     });
 }
 

@@ -27,7 +27,7 @@ function Register(){
                 },
                 body: JSON.stringify(formData)
             }
-            const res = await fetch("http://localhost:5000/api/users/register", options)
+            const res = await fetch("/api/users/register", options)
             console.log(res)
             const json = await res.json();
             console.log(json)
