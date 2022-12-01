@@ -1,21 +1,28 @@
 import { IonIcon } from "@ionic/react";
-import { Link } from "react-router-dom";
-import {addOutline,chatbubbleOutline,logOutOutline,peopleOutline,personOutline} from "ionicons/icons";
+import { Link, useNavigate } from "react-router-dom";
+import {addOutline,chatbubblesOutline,logOutOutline,peopleOutline,personOutline} from "ionicons/icons";
 import './Sidebar.css';
+import {useStateContext} from '../../context/stateContext'
+import { useEffect } from "react";
 function Sidebar() {
+    const navigate = useNavigate();
 
+    const {user} = useStateContext();
+    useEffect(() =>{ if(!user.username) {
+        navigate('/login')
+    }},[navigate, user]);
     return (
         <div className="mainMenu">
             <div>
                 <IonIcon icon={addOutline}></IonIcon>
             </div>
             <div className="openChat">
-                <IonIcon icon={chatbubbleOutline}></IonIcon>
+                <IonIcon icon={chatbubblesOutline}></IonIcon>
             </div>
             <div>
                 <IonIcon icon={peopleOutline}></IonIcon>
             </div>
-            <Link to="/profile.html">
+            <Link to={'/'+(user.username)?user.username:''}>
                 <div className="second">
                     <IonIcon icon={personOutline}></IonIcon>
                 </div>

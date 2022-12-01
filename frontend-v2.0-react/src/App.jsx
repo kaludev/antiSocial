@@ -14,37 +14,38 @@ import ContextProvider from './context/stateContext';
 
 function App() {
   return (
-    <Router>
-      <ContextProvider>
-      <Routes>
-        <Route 
-          exact path = '/'
-          element ={<Home />}
-        />
-        <Route
-          exact path="/login"
-          element= {<Login />} 
+    
+      <Router>
+        <ContextProvider>
+        <Routes>
+            <Route 
+            exact path = '/'
+            element ={<Home />}
+            />
+            <Route
+            exact path="/login"
+            element= {<Login />} 
+            />
+            <Route
+            exact path="/register"
+            element= {<Register />} 
+            />
+            <Route
+            exact path="/:username"
+            element= {<Profile />}
+            />
+          <Route 
+            path="*"
+            element={
+              <div>
+                <h1>404 - Page does not exist</h1>
+                <a href='/'>Back to home</a>
+              </div>
+            }
           />
-          <Route
-          exact path="/register"
-          element= {<Register />} 
-          />
-          <Route
-          exact path="/:username"
-          element= {<Profile />}
-          />
-        <Route 
-          path="*"
-          element={
-            <div>
-              <h1>404 - Page does not exist</h1>
-              <a href='/'>Back to home</a>
-            </div>
-          }
-        />
-      </Routes>
-      </ContextProvider>
-		</Router>
+          </Routes>
+        </ContextProvider>
+		  </Router>
   );
 }
 
