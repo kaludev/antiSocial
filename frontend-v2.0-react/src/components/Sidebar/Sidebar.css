@@ -1,2 +1,32 @@
 
+.mainMenu{
+    display: flex;
+    position: sticky;
+    align-items: center;
+    height: fit-content;
+    flex-direction: column;
+    padding-top: 20px;
+    font-size: 20px;
+    width: 60px;
+    top: 0px;
+}
+.mainMenu div{
+    padding: 20px;
+    color: #064F68;
+    --ionicon-stroke-width: 42;
+}
+.mainMenu div:hover{
+    cursor: pointer;
+}
 
+.openChat{
+    cursor: pointer;
+}
+
+.second{
+    display: block;
+}
+
+.logout{
+    cursor: pointer;
+}

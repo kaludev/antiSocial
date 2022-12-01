@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import {useStateContext} from "../../context/stateContext"
 import Sidebar from "../../components/Sidebar/Sidebar";
+import './Home.css';
 
 function Home() {
     const navigate = useNavigate();
@@ -30,10 +31,10 @@ function Home() {
     return(
         <>
         <Navbar />
-        <div>
+        <main>
             <Sidebar />
             <p>{JSON.stringify(user)}</p>
-        </div>
+        </main>
         </>
     )
 }
