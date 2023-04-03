@@ -3,14 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import {addOutline,chatbubblesOutline,logOutOutline,peopleOutline,personOutline} from "ionicons/icons";
 import './Sidebar.css';
 import {useStateContext} from '../../context/stateContext'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 function Sidebar() {
     const navigate = useNavigate();
 
     const {user} = useStateContext();
-    useEffect(() =>{ if(!user.username) {
-        navigate('/login')
-    }},[navigate, user]);
+    const [username,setUsername] = useState("");
+
+    useEffect(() => {
+        setTimeout(() =>{
+            console.log(user)
+            setUsername(user.username)
+        },1*1000);
+    },[]);
     return (
         <div className="mainMenu">
             <div>
@@ -22,14 +27,15 @@ function Sidebar() {
             <div>
                 <IonIcon icon={peopleOutline}></IonIcon>
             </div>
-            <Link to={'/'+(user.username)?user.username:''}>
+            <div className="logout second">
+                    <IonIcon icon={logOutOutline}></IonIcon>
+            </div>
+            <Link to={'/'+username}>
                 <div className="second">
                     <IonIcon icon={personOutline}></IonIcon>
                 </div>
             </Link>
-            <div className="logout second">
-                    <IonIcon icon={logOutOutline}></IonIcon>
-            </div>
+            
         </div>
     )
 }
